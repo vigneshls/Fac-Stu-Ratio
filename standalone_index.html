@@ -99,14 +99,14 @@
     .btn-outline { background: transparent; border: 1px solid var(--brand-600); color: var(--brand-600); }
     .btn-sm { padding: 5px 10px; font-size: 11px; }
 
-    /* PROMINENT RULE CUSTOMIZATION BANNER */
+    /* ALWAYS-VISIBLE PROMINENT RULE CUSTOMIZATION BANNER */
     .rule-customizer-panel {
-      background: var(--brand-50);
-      border: 1.5px solid #C7D2FE;
+      background: #EEF2FF;
+      border: 2px solid #6366F1;
       border-radius: var(--radius);
-      padding: 16px 20px;
+      padding: 18px;
       margin-bottom: 16px;
-      box-shadow: var(--shadow);
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.08);
     }
 
     .panel-head {
@@ -117,7 +117,7 @@
     }
 
     .panel-title {
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 800;
       color: var(--brand-600);
       display: flex;
@@ -157,13 +157,17 @@
     .rule-input-field {
       width: 100%;
       padding: 6px 10px;
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       border-radius: 6px;
-      font-size: 13px;
-      font-weight: 700;
+      font-size: 14px;
+      font-weight: 800;
       color: var(--brand-600);
       font-family: 'JetBrains Mono', monospace;
       outline: none;
+    }
+
+    .rule-input-field:focus {
+      border-color: var(--brand-600);
     }
 
     .summary-grid {
@@ -241,6 +245,7 @@
       display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); font-size: 11px;
     }
 
+    /* Modal Form Customization Styles */
     .modal-overlay {
       position: fixed; inset: 0; background: rgba(15, 23, 42, 0.4);
       z-index: 100; display: flex; align-items: center; justify-content: center; padding: 16px;
@@ -268,7 +273,7 @@
     .form-field { display: flex; flex-direction: column; gap: 4px; }
     .form-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
 
-    .form-select, .form-num-input {
+    .form-select, .form-num-input, .form-text-input {
       background: #FFFFFF;
       border: 1px solid var(--border);
       padding: 7px 10px;
@@ -304,11 +309,12 @@
       <div>
         <div class="trust-tag">T.M.H.N.U. Educational Trust, Theni</div>
         <h1 class="header-title">Nadar Saraswathi Staffing Calculator</h1>
-        <p class="header-sub">Customize trust staffing rules & recalculate recruitment requirements</p>
+        <p class="header-sub">Customizable staffing rules & campus recruitment calculator</p>
       </div>
       <div class="header-actions">
-        <button class="btn btn-outline" onclick="toggleGlobalRulesPanel()">
-          ⚙️ Customize Global Rules
+        <button class="btn btn-primary" onclick="openAddModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          + Add Campus
         </button>
         <button class="btn btn-secondary" onclick="exportCSV()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -317,13 +323,13 @@
       </div>
     </header>
 
-    <!-- PROMINENT GLOBAL RULES CUSTOMIZER PANEL -->
+    <!-- ALWAYS VISIBLE PROMINENT GLOBAL RULES CUSTOMIZER PANEL -->
     <div class="rule-customizer-panel" id="globalRulesPanel">
       <div class="panel-head">
         <div class="panel-title">
-          ⚙️ Customize Trust Staffing Rules & Ratios (Instant Live Recalculation)
+          ⚙️ Customize Trust Staffing Rules & Ratios (Live Recalculation Engine)
         </div>
-        <button class="btn btn-secondary btn-sm" onclick="resetGlobalRules()">Reset to Standard Norms</button>
+        <button class="btn btn-secondary btn-sm" onclick="resetGlobalRules()">Reset Default Rules</button>
       </div>
 
       <div class="global-rules-grid">
@@ -361,6 +367,7 @@
       </div>
     </div>
 
+    <!-- SUMMARY STATISTICS DECK -->
     <div class="summary-grid" id="summaryDeck"></div>
 
     <div class="controls-bar">
@@ -390,6 +397,58 @@
       <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 6px;">
         <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
         <button class="btn btn-primary" onclick="saveModal()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add New Campus / Institution Modal -->
+  <div class="modal-overlay" id="addCampusModal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h2 style="font-size: 16px; font-weight: 800;">Add New Institution Campus</h2>
+        <button class="btn btn-secondary" style="padding: 3px 8px; font-size: 12px;" onclick="closeAddModal()">✕</button>
+      </div>
+      <div class="rule-form-grid" style="grid-template-columns: 1fr 1fr;">
+        <div class="form-field" style="grid-column: span 2;">
+          <label class="form-label">Campus Name</label>
+          <input type="text" id="new_name" placeholder="e.g. Nadar Saraswathi New Science Campus" class="form-text-input"/>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Category</label>
+          <select id="new_cat" class="form-select">
+            <option value="Colleges & Higher Education">Colleges & Higher Education</option>
+            <option value="Matriculation Schools">Matriculation Schools</option>
+            <option value="Aided Primary & Secondary Schools">Aided Primary & Secondary Schools</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Campus Type</label>
+          <input type="text" id="new_type" placeholder="e.g. Engineering / CBSE / Primary" class="form-text-input"/>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Staffing Rule Model</label>
+          <select id="new_rule" class="form-select">
+            <option value="ratio">Student-Teacher Ratio Model (1:X)</option>
+            <option value="per_section">Fixed Teachers Per Section Model</option>
+            <option value="nursery_primary">RTE Act & Nursery Model</option>
+          </select>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Target Ratio / Per Section Multiplier</label>
+          <input type="number" id="new_param" value="20" class="form-num-input"/>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Total Enrolled Students</label>
+          <input type="number" id="new_students" value="400" class="form-num-input font-mono"/>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Current Faculty On-Roll</label>
+          <input type="number" id="new_faculty" value="20" class="form-num-input font-mono" style="color: var(--brand-600)"/>
+        </div>
+      </div>
+      <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 6px;">
+        <button class="btn btn-secondary" onclick="closeAddModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveNewCampus()">Save & Add Campus</button>
       </div>
     </div>
   </div>
@@ -647,7 +706,7 @@
           }
         });
       } else {
-        students = 500;
+        students = Number(inst.totalStudents) || 500;
         required = Math.ceil(students / (Number(inst.targetRatio) || 20));
       }
       const current = Number(inst.currentFaculty) || 0;
@@ -763,11 +822,6 @@
       render();
     };
 
-    window.toggleGlobalRulesPanel = () => {
-      const p = document.getElementById("globalRulesPanel");
-      p.style.display = p.style.display === "none" ? "block" : "none";
-    };
-
     window.updateFaculty = (id, delta) => {
       state.institutions = state.institutions.map(i => i.id === id ? { ...i, currentFaculty: Math.max(0, i.currentFaculty + delta) } : i);
       render();
@@ -783,6 +837,44 @@
 
     window.searchCampus = (q) => { state.searchQuery = q; render(); };
 
+    /* ADD NEW CAMPUS MODAL CONTROLS */
+    window.openAddModal = () => {
+      document.getElementById("addCampusModal").style.display = "flex";
+    };
+    window.closeAddModal = () => {
+      document.getElementById("addCampusModal").style.display = "none";
+    };
+    window.saveNewCampus = () => {
+      const name = document.getElementById("new_name").value.trim() || "New Nadar Saraswathi Campus";
+      const cat = document.getElementById("new_cat").value;
+      const type = document.getElementById("new_type").value.trim() || "Higher Secondary / College";
+      const ruleType = document.getElementById("new_rule").value;
+      const param = parseFloat(document.getElementById("new_param").value) || 20;
+      const students = parseInt(document.getElementById("new_students").value) || 300;
+      const faculty = parseInt(document.getElementById("new_faculty").value) || 15;
+
+      const newInst = {
+        id: "inst_" + Date.now(),
+        name,
+        category: cat,
+        type,
+        ruleType,
+        targetRatio: param,
+        teachersPerSection: param,
+        maxPerSection: 40,
+        currentFaculty: faculty,
+        totalStudents: students,
+        breakdown: [
+          { id: "b1", name: "Main Campus Section", students, maxPerSec: 40 }
+        ]
+      };
+
+      state.institutions.unshift(newInst);
+      closeAddModal();
+      render();
+    };
+
+    /* EDIT CAMPUS RULES MODAL CONTROLS */
     window.openEditModal = (id) => {
       const original = state.institutions.find(i => i.id === id);
       state.editingInst = JSON.parse(JSON.stringify(original));
