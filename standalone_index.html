@@ -166,7 +166,7 @@
 
     .form-row {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
       gap: 14px;
       margin-bottom: 16px;
     }
@@ -275,7 +275,7 @@
           </button>
         </div>
 
-        <!-- 1. Category & School Name Dropdown Selection -->
+        <!-- 1. Category & School Name Selection -->
         <div class="form-row">
           <div class="form-field">
             <label class="form-label">1. School Splitup Category</label>
@@ -291,25 +291,26 @@
           </div>
         </div>
 
-        <!-- 2. Standard Bucket Selection & Inputs -->
-        <div style="background: var(--bg-slate); padding: 16px; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 16px;">
+        <!-- 2. Hierarchical Grade & Class Level Selection -->
+        <div style="background: var(--bg-slate); padding: 18px; border-radius: 10px; border: 1px solid var(--border); margin-bottom: 16px;">
           <h4 style="font-size: 12px; font-weight: 800; text-transform: uppercase; color: var(--brand-600); margin-bottom: 12px;">
-            Standard Bucket & Input Specifications
+            Educational Stage & Class Level Inputs
           </h4>
 
           <div class="form-row">
             <div class="form-field">
-              <label class="form-label">Standard Bucket / Grade</label>
-              <select class="form-select" id="selStandard" onchange="onStandardSelectChange()">
-                <option value="prekg_lkg_ukg">Pre-KG, LKG & UKG (Kindergarten)</option>
-                <option value="primary_1_5">Classes 1 to 5 (Primary)</option>
-                <option value="middle_6_8">Classes 6, 7 & 8 (Upper Primary / Middle)</option>
-                <option value="sec_9_12">Classes 9, 10, 11 & 12 (High & Hr Sec)</option>
-                <option value="class_9">Class 9 (High School)</option>
-                <option value="class_10">Class 10 (High School)</option>
-                <option value="class_11">Class 11 (Higher Secondary)</option>
-                <option value="class_12">Class 12 (Higher Secondary)</option>
+              <label class="form-label">Academic Stage Level</label>
+              <select class="form-select" id="selAcademicStage" onchange="onAcademicStageChange()">
+                <option value="kg">Kindergarten (Pre-KG, LKG & UKG)</option>
+                <option value="primary">Primary Level (Classes 1 to 5)</option>
+                <option value="middle">Middle Level (Classes 6, 7 & 8)</option>
+                <option value="high_hrsec">High & Hr Sec Level (Classes 9 to 12)</option>
               </select>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label">Specific Class / Grade</label>
+              <select class="form-select" id="selSpecificClass" onchange="onSpecificClassChange()"></select>
             </div>
 
             <div class="form-field">
@@ -355,21 +356,21 @@
           </div>
 
           <div style="margin-top: 14px; text-align: right;">
-            <button class="btn btn-primary" onclick="addOrUpdateStandardEntry()">
-              ➕ Save / Update Standard Specification
+            <button class="btn btn-primary" onclick="addOrUpdateClassEntry()">
+              ➕ Save / Update Class Specification
             </button>
           </div>
         </div>
 
-        <!-- School Standard Specs Table -->
+        <!-- School Class Specifications Table -->
         <h4 style="font-size: 13px; font-weight: 800; color: var(--text-main); margin-bottom: 8px;">
-          School Breakdown & Standard Specifications
+          School Breakdown & Class Specifications
         </h4>
         <div class="ui-table-container">
           <table class="ui-table">
             <thead>
               <tr>
-                <th>Standard / Grade</th>
+                <th>Class / Grade Level</th>
                 <th>Students</th>
                 <th>Classrooms</th>
                 <th>Workload Norm</th>
@@ -444,7 +445,7 @@
           </div>
 
           <div style="background: var(--brand-50); padding: 12px; border-radius: 8px; font-size: 12px; color: var(--brand-600); font-weight: 600;">
-            ✓ Real-time formula rules applied live across all 8 Nadar Saraswathi Self-Financing & Government Aided schools.
+            ✓ Real-time formula rules applied live across all Nadar Saraswathi Self-Financing & Government Aided schools.
           </div>
         </div>
       </div>
@@ -452,30 +453,49 @@
   </div>
 
   <script>
+    const STAGE_CLASSES = {
+      "kg": [
+        { value: "kg_all", label: "Combined Kindergarten (Pre-KG, LKG & UKG)" },
+        { value: "prekg", label: "Pre-KG" },
+        { value: "lkg", label: "LKG" },
+        { value: "ukg", label: "UKG" }
+      ],
+      "primary": [
+        { value: "pri_all", label: "Combined Primary (Classes 1 to 5)" },
+        { value: "class_1", label: "Class 1" },
+        { value: "class_2", label: "Class 2" },
+        { value: "class_3", label: "Class 3" },
+        { value: "class_4", label: "Class 4" },
+        { value: "class_5", label: "Class 5" }
+      ],
+      "middle": [
+        { value: "mid_all", label: "Combined Middle (Classes 6, 7 & 8)" },
+        { value: "class_6", label: "Class 6" },
+        { value: "class_7", label: "Class 7" },
+        { value: "class_8", label: "Class 8" }
+      ],
+      "high_hrsec": [
+        { value: "sec_all", label: "Combined High & Hr Sec (Classes 9 to 12)" },
+        { value: "class_9", label: "Class 9" },
+        { value: "class_10", label: "Class 10" },
+        { value: "class_11", label: "Class 11" },
+        { value: "class_12", label: "Class 12" }
+      ]
+    };
+
     const SCHOOL_DATA = [
       // Self Financing (Matriculation / CBSE)
-      { id: "nsnps", name: "NS Nursery & Primary School, Theni", category: "Self Financing", currentStaff: 22, specs: { "prekg_lkg_ukg": { students: 240, classrooms: 8, workload: 25, current: 12 }, "primary_1_5": { students: 320, classrooms: 10, workload: 28, current: 10 } } },
-      { id: "tmhnu_muthu", name: "T.M.H.N.U. Matric Hr. Sec. School, Muthuthevanpatti, Theni", category: "Self Financing", currentStaff: 58, specs: { "primary_1_5": { students: 450, classrooms: 12, workload: 28, current: 15 }, "middle_6_8": { students: 380, classrooms: 9, workload: 28, current: 13 }, "sec_9_12": { students: 590, classrooms: 14, workload: 28, current: 30 } } },
-      { id: "tmhnu_vidya", name: "T.M.H.N.U. Vidyalaya Matric Hr. Sec. School, Theni", category: "Self Financing", currentStaff: 65, specs: { "prekg_lkg_ukg": { students: 160, classrooms: 5, workload: 25, current: 8 }, "primary_1_5": { students: 500, classrooms: 13, workload: 28, current: 17 }, "middle_6_8": { students: 420, classrooms: 10, workload: 28, current: 14 }, "sec_9_12": { students: 540, classrooms: 13, workload: 28, current: 26 } } },
-      { id: "tmhnu_girls_vada", name: "T.M.H.N.U. Girls Matric Hr. Sec. School, Vadapudupatti", category: "Self Financing", currentStaff: 52, specs: { "primary_1_5": { students: 380, classrooms: 10, workload: 28, current: 13 }, "middle_6_8": { students: 340, classrooms: 8, workload: 28, current: 11 }, "sec_9_12": { students: 460, classrooms: 11, workload: 28, current: 28 } } },
-      { id: "ns_public", name: "NS Public School, Vadapudhupatti (CBSE)", category: "Self Financing", currentStaff: 42, specs: { "prekg_lkg_ukg": { students: 140, classrooms: 5, workload: 25, current: 7 }, "primary_1_5": { students: 360, classrooms: 9, workload: 28, current: 12 }, "middle_6_8": { students: 280, classrooms: 7, workload: 28, current: 9 }, "sec_9_12": { students: 220, classrooms: 6, workload: 28, current: 14 } } },
+      { id: "nsnps", name: "NS Nursery & Primary School, Theni", category: "Self Financing", currentStaff: 22, specs: { "kg_all": { students: 240, classrooms: 8, workload: 25, current: 12 }, "pri_all": { students: 320, classrooms: 10, workload: 28, current: 10 } } },
+      { id: "tmhnu_muthu", name: "T.M.H.N.U. Matric Hr. Sec. School, Muthuthevanpatti, Theni", category: "Self Financing", currentStaff: 58, specs: { "pri_all": { students: 450, classrooms: 12, workload: 28, current: 15 }, "mid_all": { students: 380, classrooms: 9, workload: 28, current: 13 }, "sec_all": { students: 590, classrooms: 14, workload: 28, current: 30 } } },
+      { id: "tmhnu_vidya", name: "T.M.H.N.U. Vidyalaya Matric Hr. Sec. School, Theni", category: "Self Financing", currentStaff: 65, specs: { "kg_all": { students: 160, classrooms: 5, workload: 25, current: 8 }, "pri_all": { students: 500, classrooms: 13, workload: 28, current: 17 }, "mid_all": { students: 420, classrooms: 10, workload: 28, current: 14 }, "sec_all": { students: 540, classrooms: 13, workload: 28, current: 26 } } },
+      { id: "tmhnu_girls_vada", name: "T.M.H.N.U. Girls Matric Hr. Sec. School, Vadapudupatti", category: "Self Financing", currentStaff: 52, specs: { "pri_all": { students: 380, classrooms: 10, workload: 28, current: 13 }, "mid_all": { students: 340, classrooms: 8, workload: 28, current: 11 }, "sec_all": { students: 460, classrooms: 11, workload: 28, current: 28 } } },
+      { id: "ns_public", name: "NS Public School, Vadapudhupatti (CBSE)", category: "Self Financing", currentStaff: 42, specs: { "kg_all": { students: 140, classrooms: 5, workload: 25, current: 7 }, "pri_all": { students: 360, classrooms: 9, workload: 28, current: 12 }, "mid_all": { students: 280, classrooms: 7, workload: 28, current: 9 }, "sec_all": { students: 220, classrooms: 6, workload: 28, current: 14 } } },
 
       // Govt Aided
-      { id: "ns_hr_sec", name: "Nadar Saraswathi Hr. Sec. School, Theni", category: "Govt Aided", currentStaff: 46, specs: { "middle_6_8": { students: 540, classrooms: 13, workload: 24, current: 16 }, "sec_9_12": { students: 900, classrooms: 22, workload: 24, current: 30 } } },
-      { id: "ns_girls_hr_sec", name: "Nadar Saraswathi Girls Hr. Sec. School, Theni", category: "Govt Aided", currentStaff: 44, specs: { "middle_6_8": { students: 510, classrooms: 12, workload: 24, current: 15 }, "sec_9_12": { students: 850, classrooms: 21, workload: 24, current: 29 } } },
-      { id: "ns_primary", name: "Nadar Saraswathi Primary School", category: "Govt Aided", currentStaff: 16, specs: { "prekg_lkg_ukg": { students: 60, classrooms: 2, workload: 25, current: 3 }, "primary_1_5": { students: 370, classrooms: 10, workload: 25, current: 13 } } }
+      { id: "ns_hr_sec", name: "Nadar Saraswathi Hr. Sec. School, Theni", category: "Govt Aided", currentStaff: 46, specs: { "mid_all": { students: 540, classrooms: 13, workload: 24, current: 16 }, "sec_all": { students: 900, classrooms: 22, workload: 24, current: 30 } } },
+      { id: "ns_girls_hr_sec", name: "Nadar Saraswathi Girls Hr. Sec. School, Theni", category: "Govt Aided", currentStaff: 44, specs: { "mid_all": { students: 510, classrooms: 12, workload: 24, current: 15 }, "sec_all": { students: 850, classrooms: 21, workload: 24, current: 29 } } },
+      { id: "ns_primary", name: "Nadar Saraswathi Primary School", category: "Govt Aided", currentStaff: 16, specs: { "kg_all": { students: 60, classrooms: 2, workload: 25, current: 3 }, "pri_all": { students: 370, classrooms: 10, workload: 25, current: 13 } } }
     ];
-
-    const STANDARD_LABELS = {
-      "prekg_lkg_ukg": "Pre-KG, LKG & UKG (Kindergarten)",
-      "primary_1_5": "Classes 1 to 5 (Primary)",
-      "middle_6_8": "Classes 6, 7 & 8 (Upper Primary / Middle)",
-      "sec_9_12": "Classes 9, 10, 11 & 12 (High & Hr Sec)",
-      "class_9": "Class 9 (High School)",
-      "class_10": "Class 10 (High School)",
-      "class_11": "Class 11 (Higher Secondary)",
-      "class_12": "Class 12 (Higher Secondary)"
-    };
 
     let rules = {
       kgRatio: 20,
@@ -522,35 +542,44 @@
 
     window.onSchoolChange = () => {
       selectedSchoolId = document.getElementById("selSchool").value;
-      const school = SCHOOL_DATA.find(s => s.id === selectedSchoolId);
-      if (!school) return;
-
-      const stdKey = document.getElementById("selStandard").value;
-      if (school.specs[stdKey]) {
-        document.getElementById("inpStudents").value = school.specs[stdKey].students || 200;
-        document.getElementById("inpClassrooms").value = school.specs[stdKey].classrooms || 5;
-        document.getElementById("inpWorkload").value = school.specs[stdKey].workload || (school.category === "Govt Aided" ? 24 : 28);
-      }
-      calculateLiveOutput();
-      render();
+      onAcademicStageChange();
     };
 
-    window.onStandardSelectChange = () => {
+    window.onAcademicStageChange = () => {
+      const stage = document.getElementById("selAcademicStage").value;
+      const classOptions = STAGE_CLASSES[stage] || [];
+      const selSpecific = document.getElementById("selSpecificClass");
+      selSpecific.innerHTML = classOptions.map(c => `<option value="${c.value}">${c.label}</option>`).join('');
+
+      onSpecificClassChange();
+    };
+
+    window.onSpecificClassChange = () => {
       const school = SCHOOL_DATA.find(s => s.id === selectedSchoolId);
-      const stdKey = document.getElementById("selStandard").value;
-      if (school && school.specs[stdKey]) {
-        document.getElementById("inpStudents").value = school.specs[stdKey].students;
-        document.getElementById("inpClassrooms").value = school.specs[stdKey].classrooms;
-        document.getElementById("inpWorkload").value = school.specs[stdKey].workload;
+      const classKey = document.getElementById("selSpecificClass").value;
+
+      if (school && school.specs[classKey]) {
+        document.getElementById("inpStudents").value = school.specs[classKey].students;
+        document.getElementById("inpClassrooms").value = school.specs[classKey].classrooms;
+        document.getElementById("inpWorkload").value = school.specs[classKey].workload;
       } else {
         document.getElementById("inpStudents").value = 180;
         document.getElementById("inpClassrooms").value = 5;
         document.getElementById("inpWorkload").value = school && school.category === "Govt Aided" ? 24 : 28;
       }
       calculateLiveOutput();
+      render();
     };
 
-    function calculateFormula(category, stdKey, students, classrooms, workload) {
+    function getClassLabel(classKey) {
+      for (const stage in STAGE_CLASSES) {
+        const item = STAGE_CLASSES[stage].find(c => c.value === classKey);
+        if (item) return item.label;
+      }
+      return classKey;
+    }
+
+    function calculateFormula(category, classKey, students, classrooms, workload) {
       students = Number(students) || 0;
       classrooms = Number(classrooms) || 1;
       workload = Number(workload) || 28;
@@ -558,14 +587,14 @@
       let ratioText = "1:30";
       let required = 0;
 
-      if (stdKey === "prekg_lkg_ukg") {
+      if (["kg_all", "prekg", "lkg", "ukg"].includes(classKey)) {
         ratioText = `1:${rules.kgRatio}`;
         required = Math.max(1, Math.ceil(students / rules.kgRatio));
-      } else if (stdKey === "primary_1_5") {
+      } else if (["pri_all", "class_1", "class_2", "class_3", "class_4", "class_5"].includes(classKey)) {
         ratioText = `1:${rules.priRatio}`;
         if (students <= 60) required = 2;
         else required = Math.ceil(students / rules.priRatio);
-      } else if (stdKey === "middle_6_8") {
+      } else if (["mid_all", "class_6", "class_7", "class_8"].includes(classKey)) {
         ratioText = `1:${rules.midRatio}`;
         required = Math.max(3, Math.ceil(students / rules.midRatio));
       } else {
@@ -574,7 +603,6 @@
           ratioText = `${rules.sfTeachersPerSec}/sec`;
           required = Math.ceil(classrooms * rules.sfTeachersPerSec);
         } else {
-          // Govt Aided Workload / Subject Norm
           ratioText = "Subject Norm";
           required = Math.max(classrooms, Math.ceil((classrooms * 30) / workload));
         }
@@ -584,15 +612,15 @@
 
     window.calculateLiveOutput = () => {
       const cat = document.getElementById("selCategory").value;
-      const stdKey = document.getElementById("selStandard").value;
+      const classKey = document.getElementById("selSpecificClass").value;
       const students = parseInt(document.getElementById("inpStudents").value) || 0;
       const classrooms = parseInt(document.getElementById("inpClassrooms").value) || 1;
       const workload = parseInt(document.getElementById("inpWorkload").value) || 28;
 
       const school = SCHOOL_DATA.find(s => s.id === selectedSchoolId);
-      const current = (school && school.specs[stdKey]) ? (school.specs[stdKey].current || 0) : 0;
+      const current = (school && school.specs[classKey]) ? (school.specs[classKey].current || 0) : 0;
 
-      const calc = calculateFormula(cat, stdKey, students, classrooms, workload);
+      const calc = calculateFormula(cat, classKey, students, classrooms, workload);
 
       document.getElementById("resRatio").innerText = calc.ratioText;
       document.getElementById("resRequired").innerText = calc.required;
@@ -608,44 +636,43 @@
 
     window.adjustCurrentFaculty = (delta) => {
       const school = SCHOOL_DATA.find(s => s.id === selectedSchoolId);
-      const stdKey = document.getElementById("selStandard").value;
-      if (!school.specs[stdKey]) {
-        school.specs[stdKey] = { students: 200, classrooms: 5, workload: 28, current: 5 };
+      const classKey = document.getElementById("selSpecificClass").value;
+      if (!school.specs[classKey]) {
+        school.specs[classKey] = { students: 200, classrooms: 5, workload: 28, current: 5 };
       }
-      school.specs[stdKey].current = Math.max(0, (school.specs[stdKey].current || 0) + delta);
+      school.specs[classKey].current = Math.max(0, (school.specs[classKey].current || 0) + delta);
       calculateLiveOutput();
       render();
     };
 
-    window.addOrUpdateStandardEntry = () => {
+    window.addOrUpdateClassEntry = () => {
       const school = SCHOOL_DATA.find(s => s.id === selectedSchoolId);
-      const stdKey = document.getElementById("selStandard").value;
+      const classKey = document.getElementById("selSpecificClass").value;
       const students = parseInt(document.getElementById("inpStudents").value) || 0;
       const classrooms = parseInt(document.getElementById("inpClassrooms").value) || 1;
       const workload = parseInt(document.getElementById("inpWorkload").value) || 28;
 
-      const current = school.specs[stdKey] ? (school.specs[stdKey].current || 0) : Math.ceil(students / 30);
+      const current = school.specs[classKey] ? (school.specs[classKey].current || 0) : Math.ceil(students / 30);
 
-      school.specs[stdKey] = { students, classrooms, workload, current };
+      school.specs[classKey] = { students, classrooms, workload, current };
       render();
     };
 
-    window.deleteStandardEntry = (stdKey) => {
+    window.deleteClassEntry = (classKey) => {
       const school = SCHOOL_DATA.find(s => s.id === selectedSchoolId);
-      if (school && school.specs[stdKey]) {
-        delete school.specs[stdKey];
+      if (school && school.specs[classKey]) {
+        delete school.specs[classKey];
         render();
       }
     };
 
     function render() {
-      // 1. Calculate overall summary statistics
       let totStudents = 0, totReq = 0, totCurr = 0, totNeeded = 0;
 
       SCHOOL_DATA.forEach(school => {
-        Object.keys(school.specs).forEach(stdKey => {
-          const spec = school.specs[stdKey];
-          const calc = calculateFormula(school.category, stdKey, spec.students, spec.classrooms, spec.workload);
+        Object.keys(school.specs).forEach(classKey => {
+          const spec = school.specs[classKey];
+          const calc = calculateFormula(school.category, classKey, spec.students, spec.classrooms, spec.workload);
           totStudents += spec.students;
           totReq += calc.required;
           totCurr += (spec.current || 0);
@@ -672,23 +699,22 @@
         </div>
       `;
 
-      // 2. Render Specs Table for Selected School
       const school = SCHOOL_DATA.find(s => s.id === selectedSchoolId);
       const tbody = document.getElementById("schoolSpecsTableBody");
 
       if (!school || Object.keys(school.specs).length === 0) {
-        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; color: var(--text-muted); padding: 16px;">No standard specifications added for this school yet.</td></tr>`;
+        tbody.innerHTML = `<tr><td colspan="9" style="text-align:center; color: var(--text-muted); padding: 16px;">No class specifications added for this school yet.</td></tr>`;
         return;
       }
 
-      tbody.innerHTML = Object.keys(school.specs).map(stdKey => {
-        const spec = school.specs[stdKey];
-        const calc = calculateFormula(school.category, stdKey, spec.students, spec.classrooms, spec.workload);
+      tbody.innerHTML = Object.keys(school.specs).map(classKey => {
+        const spec = school.specs[classKey];
+        const calc = calculateFormula(school.category, classKey, spec.students, spec.classrooms, spec.workload);
         const deficit = Math.max(0, calc.required - spec.current);
 
         return `
           <tr>
-            <td><strong>${STANDARD_LABELS[stdKey] || stdKey}</strong></td>
+            <td><strong>${getClassLabel(classKey)}</strong></td>
             <td class="font-mono">${spec.students.toLocaleString()}</td>
             <td class="font-mono">${spec.classrooms}</td>
             <td class="font-mono">${spec.workload} periods/wk</td>
@@ -699,13 +725,12 @@
               ${deficit > 0 ? `<span class="status-pill pill-rose">+${deficit} Needed</span>` : `<span class="status-pill pill-emerald">✓ Fully Staffed</span>`}
             </td>
             <td>
-              <button class="btn btn-secondary btn-sm" onclick="deleteStandardEntry('${stdKey}')">Remove</button>
+              <button class="btn btn-secondary btn-sm" onclick="deleteClassEntry('${classKey}')">Remove</button>
             </td>
           </tr>
         `;
       }).join('');
 
-      // 3. Render Admin Panel state
       if (isAdmin) {
         document.getElementById("adminLoggedOutBox").style.display = "none";
         document.getElementById("adminLoggedInSuite").style.display = "block";
@@ -751,13 +776,13 @@
     };
 
     window.exportCSV = () => {
-      let csv = ["School Name,Category,Standard Bucket,Enrolled Students,Classrooms,Workload Norm,Ratio Norm,Required Staff,Current Staff,Hiring Needed"];
+      let csv = ["School Name,Category,Class / Grade Level,Enrolled Students,Classrooms,Workload Norm,Ratio Norm,Required Staff,Current Staff,Hiring Needed"];
       SCHOOL_DATA.forEach(school => {
-        Object.keys(school.specs).forEach(stdKey => {
-          const spec = school.specs[stdKey];
-          const calc = calculateFormula(school.category, stdKey, spec.students, spec.classrooms, spec.workload);
+        Object.keys(school.specs).forEach(classKey => {
+          const spec = school.specs[classKey];
+          const calc = calculateFormula(school.category, classKey, spec.students, spec.classrooms, spec.workload);
           const deficit = Math.max(0, calc.required - spec.current);
-          csv.push(`"${school.name}","${school.category}","${STANDARD_LABELS[stdKey]}",${spec.students},${spec.classrooms},"${spec.workload} periods/wk","${calc.ratioText}",${calc.required},${spec.current},${deficit}`);
+          csv.push(`"${school.name}","${school.category}","${getClassLabel(classKey)}",${spec.students},${spec.classrooms},"${spec.workload} periods/wk","${calc.ratioText}",${calc.required},${spec.current},${deficit}`);
         });
       });
       const blob = new Blob([csv.join("\n")], { type: "text/csv" });
