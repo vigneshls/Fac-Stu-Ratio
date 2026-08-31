@@ -50,7 +50,6 @@
       padding: 16px;
     }
 
-    /* Fixed Strict SVG Icon Styles */
     svg, .icon-svg {
       width: 16px !important;
       height: 16px !important;
@@ -63,7 +62,6 @@
       vertical-align: middle !important;
     }
 
-    /* Clean Compact Header */
     .app-header {
       background: var(--bg-card);
       border: 1px solid var(--border);
@@ -86,253 +84,138 @@
       letter-spacing: 0.8px;
     }
 
-    .header-title {
-      font-size: 20px;
-      font-weight: 800;
-      color: var(--text-main);
-      margin-top: 2px;
-    }
-
-    .header-sub {
-      font-size: 12px;
-      color: var(--text-muted);
-    }
-
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
+    .header-title { font-size: 20px; font-weight: 800; color: var(--text-main); margin-top: 2px; }
+    .header-sub { font-size: 12px; color: var(--text-muted); }
+    .header-actions { display: flex; align-items: center; gap: 8px; }
 
     .btn {
-      padding: 8px 14px;
-      border-radius: 8px;
-      font-size: 12px;
-      font-weight: 700;
-      border: none;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      white-space: nowrap;
+      padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 700;
+      border: none; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; white-space: nowrap;
     }
 
     .btn-primary { background: var(--brand-600); color: #FFF; }
     .btn-secondary { background: var(--bg-slate); border: 1px solid var(--border); color: var(--text-main); }
     .btn-sm { padding: 5px 10px; font-size: 11px; }
 
-    /* Uniform Summary Grid */
     .summary-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 12px;
-      margin-bottom: 16px;
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px;
     }
 
     .summary-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 14px 16px;
-      box-shadow: var(--shadow);
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 14px 16px; box-shadow: var(--shadow);
     }
 
-    .summary-card.alert {
-      background: var(--rose-50);
-      border-color: #FECDD3;
-    }
-
-    .summary-label {
-      font-size: 10px;
-      font-weight: 700;
-      color: var(--text-muted);
-      text-transform: uppercase;
-    }
-
-    .summary-val {
-      font-size: 24px;
-      font-weight: 800;
-      font-family: 'JetBrains Mono', monospace;
-      margin-top: 2px;
-    }
+    .summary-card.alert { background: var(--rose-50); border-color: #FECDD3; }
+    .summary-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+    .summary-val { font-size: 24px; font-weight: 800; font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
 
     .text-indigo { color: var(--brand-600); }
     .text-emerald { color: var(--emerald-600); }
     .text-rose { color: var(--rose-600); }
 
-    /* Controls Bar */
     .controls-bar {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 10px 14px;
-      margin-bottom: 16px;
-      box-shadow: var(--shadow);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 10px;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 10px 14px; margin-bottom: 16px; box-shadow: var(--shadow);
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
     }
 
-    .tab-group {
-      display: flex;
-      background: var(--bg-slate);
-      padding: 3px;
-      border-radius: 8px;
-      gap: 2px;
-      flex-wrap: wrap;
-    }
-
-    .tab-btn {
-      padding: 6px 12px;
-      border-radius: 6px;
-      font-size: 12px;
-      font-weight: 700;
-      border: none;
-      background: transparent;
-      color: var(--text-muted);
-      cursor: pointer;
-    }
-
-    .tab-btn.active {
-      background: #FFFFFF;
-      color: var(--brand-600);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.08);
-    }
+    .tab-group { display: flex; background: var(--bg-slate); padding: 3px; border-radius: 8px; gap: 2px; flex-wrap: wrap; }
+    .tab-btn { padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; border: none; background: transparent; color: var(--text-muted); cursor: pointer; }
+    .tab-btn.active { background: #FFFFFF; color: var(--brand-600); box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
 
     .search-input {
-      background: var(--bg-slate);
-      border: 1px solid var(--border);
-      padding: 7px 12px;
-      border-radius: 8px;
-      font-size: 12px;
-      outline: none;
-      width: 200px;
+      background: var(--bg-slate); border: 1px solid var(--border); padding: 7px 12px; border-radius: 8px; font-size: 12px; outline: none; width: 200px;
     }
 
-    /* Cards Grid */
     .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
-      gap: 14px;
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(330px, 1fr)); gap: 14px;
     }
 
     .inst-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 16px;
-      box-shadow: var(--shadow);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 16px; box-shadow: var(--shadow); display: flex; flex-direction: column; justify-content: space-between;
     }
 
     .inst-card.needs-staff { border-left: 4px solid var(--rose-600); }
     .inst-card.staffed { border-left: 4px solid var(--emerald-600); }
 
-    .card-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 10px;
-      gap: 8px;
-    }
+    .card-head { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px; gap: 8px; }
+    .inst-name { font-size: 14px; font-weight: 800; color: var(--text-main); line-height: 1.3; }
+    .inst-type { font-size: 11px; font-weight: 700; color: var(--brand-600); margin-top: 1px; }
 
-    .inst-name {
-      font-size: 14px;
-      font-weight: 800;
-      color: var(--text-main);
-      line-height: 1.3;
-    }
-
-    .inst-type {
-      font-size: 11px;
-      font-weight: 700;
-      color: var(--brand-600);
-      margin-top: 1px;
-    }
-
-    .status-badge {
-      padding: 3px 8px;
-      border-radius: 12px;
-      font-size: 10px;
-      font-weight: 800;
-      text-transform: uppercase;
-      white-space: nowrap;
-    }
-
+    .status-badge { padding: 3px 8px; border-radius: 12px; font-size: 10px; font-weight: 800; text-transform: uppercase; white-space: nowrap; }
     .badge-rose { background: var(--rose-50); color: var(--rose-600); border: 1px solid #FECDD3; }
     .badge-emerald { background: var(--emerald-50); color: var(--emerald-600); border: 1px solid #A7F3D0; }
 
-    /* Progress bar */
     .progress-box { margin-bottom: 12px; }
     .progress-text { display: flex; justify-content: space-between; font-size: 10px; font-weight: 700; margin-bottom: 4px; }
     .progress-bar { height: 6px; background: var(--bg-slate); border-radius: 3px; overflow: hidden; }
     .progress-fill { height: 100%; border-radius: 3px; }
 
-    /* Metrics Grid */
     .metrics-row {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-      background: var(--bg-slate);
-      padding: 8px;
-      border-radius: 8px;
-      margin-bottom: 12px;
-      text-align: center;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 6px; background: var(--bg-slate);
+      padding: 8px; border-radius: 8px; margin-bottom: 12px; text-align: center;
     }
 
     .metric-head { font-size: 9px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
     .metric-num { font-size: 16px; font-weight: 800; font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
 
-    /* Stepper */
     .stepper { display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 2px; }
     .step-btn {
-      width: 24px;
-      height: 24px;
-      min-width: 24px;
-      border-radius: 4px;
-      background: #FFFFFF;
-      border: 1px solid var(--border);
-      font-weight: 800;
-      font-size: 14px;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      width: 24px; height: 24px; min-width: 24px; border-radius: 4px; background: #FFFFFF;
+      border: 1px solid var(--border); font-weight: 800; font-size: 14px; cursor: pointer; display: flex; align-items: center; justify-content: center;
     }
     .step-val { font-size: 14px; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: var(--brand-600); min-width: 20px; text-align: center; }
 
     .card-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding-top: 8px;
-      border-top: 1px solid var(--border);
-      font-size: 11px;
+      display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); font-size: 11px;
     }
 
-    /* Modal */
+    /* Modal Form Customization Styles */
     .modal-overlay {
       position: fixed; inset: 0; background: rgba(15, 23, 42, 0.4);
       z-index: 100; display: flex; align-items: center; justify-content: center; padding: 16px;
     }
 
     .modal-card {
-      background: #FFFFFF; width: 100%; max-width: 540px;
-      border-radius: var(--radius); padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);
-      max-height: 85vh; overflow-y: auto;
+      background: #FFFFFF; width: 100%; max-width: 680px;
+      border-radius: var(--radius); padding: 22px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      max-height: 90vh; overflow-y: auto;
     }
 
-    .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
-    .ui-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
-    .ui-table th { background: var(--bg-slate); padding: 6px 8px; text-align: left; font-weight: 700; color: var(--text-muted); }
-    .ui-table td { padding: 6px 8px; border-bottom: 1px solid var(--border); }
-    .table-input { width: 100%; padding: 5px; border: 1px solid var(--border); border-radius: 4px; font-size: 12px; }
+    .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
 
-    /* Mobile Responsive */
+    .rule-form-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 12px;
+      background: var(--bg-slate);
+      padding: 14px;
+      border-radius: 10px;
+      margin-bottom: 16px;
+      border: 1px solid var(--border);
+    }
+
+    .form-field { display: flex; flex-direction: column; gap: 4px; }
+    .form-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+
+    .form-select, .form-num-input {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      padding: 7px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-main);
+      outline: none;
+    }
+
+    .ui-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; }
+    .ui-table th { background: var(--bg-slate); padding: 8px; text-align: left; font-weight: 700; color: var(--text-muted); }
+    .ui-table td { padding: 6px 8px; border-bottom: 1px solid var(--border); }
+    .table-input { width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 6px; font-size: 12px; }
+
     @media (max-width: 768px) {
       .summary-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
       .summary-card { padding: 10px 12px; }
@@ -349,12 +232,11 @@
 <body>
 
   <div class="container">
-    <!-- Header -->
     <header class="app-header">
       <div>
         <div class="trust-tag">T.M.H.N.U. Educational Trust, Theni</div>
         <h1 class="header-title">Nadar Saraswathi Staffing Calculator</h1>
-        <p class="header-sub">Staff recruitment norms and student count planner</p>
+        <p class="header-sub">Staff recruitment norms and customizable rule engine</p>
       </div>
       <div class="header-actions">
         <button class="btn btn-secondary" onclick="exportCSV()">
@@ -368,10 +250,8 @@
       </div>
     </header>
 
-    <!-- Top Summary Grid -->
     <div class="summary-grid" id="summaryDeck"></div>
 
-    <!-- Controls Bar -->
     <div class="controls-bar">
       <div class="tab-group" id="catTabs">
         <button class="tab-btn active" onclick="filterCat('ALL')">All Campuses (12)</button>
@@ -385,21 +265,20 @@
       </div>
     </div>
 
-    <!-- Campus Cards Grid -->
     <div class="cards-grid" id="cardsGrid"></div>
   </div>
 
-  <!-- Edit Department Modal -->
+  <!-- Edit Staffing Rules & Class Breakdown Modal -->
   <div class="modal-overlay" id="editModal" style="display: none;">
     <div class="modal-card">
       <div class="modal-head">
-        <h2 id="modalTitle" style="font-size: 16px; font-weight: 800;">Configure Campus</h2>
+        <h2 id="modalTitle" style="font-size: 16px; font-weight: 800;">Customize Rules & Classes</h2>
         <button class="btn btn-secondary" style="padding: 3px 8px; font-size: 12px;" onclick="closeModal()">✕</button>
       </div>
       <div id="modalContent"></div>
       <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 6px;">
         <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-        <button class="btn btn-primary" onclick="saveModal()">Save Changes</button>
+        <button class="btn btn-primary" onclick="saveModal()">Save Rule Changes</button>
       </div>
     </div>
   </div>
@@ -420,6 +299,7 @@
         ruleType: "ratio",
         targetRatio: 15,
         maxPerSection: 60,
+        teachersPerSection: 2.0,
         currentFaculty: 82,
         breakdown: [
           { id: "b1", name: "Computer Science & Engg", students: 360, maxPerSec: 60 },
@@ -439,6 +319,7 @@
         ruleType: "ratio",
         targetRatio: 20,
         maxPerSection: 60,
+        teachersPerSection: 1.8,
         currentFaculty: 98,
         breakdown: [
           { id: "b1", name: "Commerce & Management", students: 520, maxPerSec: 60 },
@@ -457,6 +338,7 @@
         ruleType: "ratio",
         targetRatio: 15,
         maxPerSection: 50,
+        teachersPerSection: 2.0,
         currentFaculty: 18,
         breakdown: [
           { id: "b1", name: "Pedagogy of English & Tamil", students: 80, maxPerSec: 50 },
@@ -473,6 +355,7 @@
         ruleType: "ratio",
         targetRatio: 20,
         maxPerSection: 40,
+        teachersPerSection: 1.5,
         currentFaculty: 14,
         breakdown: [
           { id: "b1", name: "COPA Trade", students: 80, maxPerSec: 40 },
@@ -489,6 +372,7 @@
         ruleType: "nursery_primary",
         targetRatio: 25,
         maxPerSection: 30,
+        teachersPerSection: 1.5,
         currentFaculty: 22,
         breakdown: [
           { id: "b1", name: "Pre-KG / Nursery", students: 90, maxPerSec: 30 },
@@ -572,6 +456,7 @@
         ruleType: "subject_based",
         targetRatio: 37,
         maxPerSection: 40,
+        teachersPerSection: 1.4,
         currentFaculty: 46,
         breakdown: [
           { id: "b1", name: "Upper Primary (Classes 6-8)", students: 540, maxPerSec: 40 },
@@ -587,6 +472,7 @@
         ruleType: "subject_based",
         targetRatio: 37,
         maxPerSection: 40,
+        teachersPerSection: 1.4,
         currentFaculty: 44,
         breakdown: [
           { id: "b1", name: "Upper Primary (Classes 6-8)", students: 510, maxPerSec: 40 },
@@ -602,6 +488,7 @@
         ruleType: "nursery_primary",
         targetRatio: 30,
         maxPerSection: 30,
+        teachersPerSection: 1.2,
         currentFaculty: 16,
         breakdown: [
           { id: "b1", name: "Nursery / KG", students: 60, maxPerSec: 30 },
@@ -615,7 +502,7 @@
       institutions: JSON.parse(JSON.stringify(INITIAL_INSTITUTIONS)),
       selectedCat: "ALL",
       searchQuery: "",
-      editingId: null
+      editingInst: null
     };
 
     function calcMetrics(inst) {
@@ -629,16 +516,16 @@
           const sec = Math.max(1, Math.ceil(count / maxSec));
 
           if (inst.ruleType === "per_section") {
-            required += Math.ceil(sec * (inst.teachersPerSection || 1.5));
+            required += Math.ceil(sec * (Number(inst.teachersPerSection) || 1.5));
           } else if (inst.ruleType === "nursery_primary") {
             required += (count < 60) ? Math.max(2, Math.ceil(count / 20)) : Math.max(2, Math.ceil(count / 30));
           } else {
-            required += Math.ceil(count / (inst.targetRatio || 20));
+            required += Math.ceil(count / (Number(inst.targetRatio) || 20));
           }
         });
       } else {
         students = 500;
-        required = Math.ceil(students / (inst.targetRatio || 20));
+        required = Math.ceil(students / (Number(inst.targetRatio) || 20));
       }
       const current = Number(inst.currentFaculty) || 0;
       const needed = Math.max(0, required - current);
@@ -709,7 +596,7 @@
                 </div>
               </div>
 
-              <!-- 3 Clear Metrics -->
+              <!-- 3 Metrics Row -->
               <div class="metrics-row">
                 <div>
                   <div class="metric-head">Students</div>
@@ -732,7 +619,7 @@
 
             <div class="card-footer">
               <span style="color: var(--text-muted);">Rule: ${inst.ruleType === 'per_section' ? (inst.teachersPerSection || 1.5) + '/sec' : '1:' + inst.targetRatio}</span>
-              <button class="btn btn-secondary btn-sm" onclick="openEditModal('${inst.id}')">Configure</button>
+              <button class="btn btn-secondary btn-sm" onclick="openEditModal('${inst.id}')">⚙️ Customize Rules</button>
             </div>
           </div>
         `;
@@ -755,43 +642,104 @@
     window.searchCampus = (q) => { state.searchQuery = q; render(); };
 
     window.openEditModal = (id) => {
-      state.editingId = id;
-      const inst = state.institutions.find(i => i.id === id);
-      document.getElementById("modalTitle").innerText = "Configure " + inst.name;
+      const original = state.institutions.find(i => i.id === id);
+      state.editingInst = JSON.parse(JSON.stringify(original));
+      renderModalContent();
+      document.getElementById("editModal").style.display = "flex";
+    };
+
+    function renderModalContent() {
+      const inst = state.editingInst;
+      const m = calcMetrics(inst);
+
+      document.getElementById("modalTitle").innerText = "Customize Rules: " + inst.name;
       document.getElementById("modalContent").innerHTML = `
-        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Adjust student counts per class or department:</p>
+        <!-- Rule Parameter Customization Form -->
+        <div class="rule-form-grid">
+          <div class="form-field">
+            <label class="form-label">Staffing Rule Model</label>
+            <select class="form-select" onchange="updateRuleField('ruleType', this.value)">
+              <option value="ratio" ${inst.ruleType === 'ratio' ? 'selected' : ''}>Student-Teacher Ratio Model (1:X)</option>
+              <option value="per_section" ${inst.ruleType === 'per_section' ? 'selected' : ''}>Fixed Teachers Per Section Model</option>
+              <option value="nursery_primary" ${inst.ruleType === 'nursery_primary' ? 'selected' : ''}>RTE Act & Nursery Model</option>
+              <option value="subject_based" ${inst.ruleType === 'subject_based' ? 'selected' : ''}>Govt Subject Assistants Model</option>
+            </select>
+          </div>
+
+          ${inst.ruleType === 'per_section' ? `
+            <div class="form-field">
+              <label class="form-label">Teachers Per Section</label>
+              <input type="number" step="0.1" class="form-num-input" value="${inst.teachersPerSection || 1.5}" onchange="updateRuleField('teachersPerSection', parseFloat(this.value) || 1.5)"/>
+            </div>
+          ` : `
+            <div class="form-field">
+              <label class="form-label">Target Ratio (1 : X)</label>
+              <input type="number" class="form-num-input" value="${inst.targetRatio || 20}" onchange="updateRuleField('targetRatio', parseInt(this.value) || 20)"/>
+            </div>
+          `}
+
+          <div class="form-field">
+            <label class="form-label">Max Students / Section</label>
+            <input type="number" class="form-num-input" value="${inst.maxPerSection || 40}" onchange="updateRuleField('maxPerSection', parseInt(this.value) || 40)"/>
+          </div>
+
+          <div class="form-field">
+            <label class="form-label">Current Faculty On-Roll</label>
+            <input type="number" class="form-num-input font-mono" style="color: var(--brand-600)" value="${inst.currentFaculty}" onchange="updateRuleField('currentFaculty', parseInt(this.value) || 0)"/>
+          </div>
+        </div>
+
+        <div style="background: var(--primary-50); padding: 10px 14px; border-radius: 8px; font-size: 12px; margin-bottom: 14px; display: flex; justify-content: space-between;">
+          <span>Calculated Required Norm: <strong class="text-indigo">${m.required} Staff</strong></span>
+          <span>Appointments Needed: <strong class="${m.needed > 0 ? 'text-rose' : 'text-emerald'}">${m.needed > 0 ? '+' + m.needed : '0'}</strong></span>
+        </div>
+
+        <h4 style="font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 6px;">Department / Grade Student Breakdown</h4>
         <table class="ui-table">
           <thead>
-            <tr><th>Department / Class</th><th>Students Enrolled</th></tr>
+            <tr><th>Department / Class</th><th>Students Enrolled</th><th>Max / Sec</th></tr>
           </thead>
           <tbody>
             ${inst.breakdown.map((b, idx) => `
               <tr>
-                <td>${b.name}</td>
-                <td>
-                  <input type="number" class="table-input" value="${b.students}" onchange="updateSubGroup(${idx}, this.value)"/>
-                </td>
+                <td><input type="text" class="table-input" value="${b.name}" onchange="updateSubGroup(${idx}, 'name', this.value)"/></td>
+                <td><input type="number" class="table-input font-mono" value="${b.students}" onchange="updateSubGroup(${idx}, 'students', parseInt(this.value))"/></td>
+                <td><input type="number" class="table-input font-mono" value="${b.maxPerSec || inst.maxPerSection || 40}" onchange="updateSubGroup(${idx}, 'maxPerSec', parseInt(this.value))"/></td>
               </tr>
             `).join('')}
           </tbody>
         </table>
       `;
-      document.getElementById("editModal").style.display = "flex";
+    }
+
+    window.updateRuleField = (field, val) => {
+      state.editingInst[field] = val;
+      renderModalContent();
     };
 
-    window.updateSubGroup = (idx, val) => {
-      const inst = state.institutions.find(i => i.id === state.editingId);
-      inst.breakdown[idx].students = parseInt(val) || 0;
+    window.updateSubGroup = (idx, field, val) => {
+      state.editingInst.breakdown[idx][field] = field === 'name' ? val : (parseInt(val) || 0);
+      renderModalContent();
     };
 
-    window.closeModal = () => { document.getElementById("editModal").style.display = "none"; render(); };
-    window.saveModal = () => { document.getElementById("editModal").style.display = "none"; render(); };
+    window.closeModal = () => {
+      state.editingInst = null;
+      document.getElementById("editModal").style.display = "none";
+      render();
+    };
+
+    window.saveModal = () => {
+      state.institutions = state.institutions.map(i => i.id === state.editingInst.id ? state.editingInst : i);
+      state.editingInst = null;
+      document.getElementById("editModal").style.display = "none";
+      render();
+    };
 
     window.exportCSV = () => {
-      let csv = ["Institution,Category,Enrolled Students,Required Staff,Current Staff,Hiring Needed"];
+      let csv = ["Institution,Category,Enrolled Students,Rule Model,Target Ratio,Required Staff,Current Staff,Hiring Needed"];
       state.institutions.forEach(i => {
         const m = calcMetrics(i);
-        csv.push(`"${i.name}","${i.category}",${m.students},${m.required},${m.current},${m.needed}`);
+        csv.push(`"${i.name}","${i.category}",${m.students},"${i.ruleType}",${i.targetRatio || 20},${m.required},${m.current},${m.needed}`);
       });
       const blob = new Blob([csv.join("\n")], { type: "text/csv" });
       const a = document.createElement("a");
