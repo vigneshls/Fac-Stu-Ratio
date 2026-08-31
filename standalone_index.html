@@ -87,7 +87,7 @@
 
     .header-title { font-size: 20px; font-weight: 800; color: var(--text-main); margin-top: 2px; }
     .header-sub { font-size: 12px; color: var(--text-muted); }
-    .header-actions { display: flex; align-items: center; gap: 8px; }
+    .header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 
     .btn {
       padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 700;
@@ -97,9 +97,23 @@
     .btn-primary { background: var(--brand-600); color: #FFF; }
     .btn-secondary { background: var(--bg-slate); border: 1px solid var(--border); color: var(--text-main); }
     .btn-outline { background: transparent; border: 1px solid var(--brand-600); color: var(--brand-600); }
+    .btn-danger { background: var(--rose-50); border: 1px solid #FECDD3; color: var(--rose-600); }
     .btn-sm { padding: 5px 10px; font-size: 11px; }
 
-    /* ALWAYS-VISIBLE PROMINENT RULE CUSTOMIZATION BANNER */
+    .admin-badge {
+      background: var(--emerald-50);
+      border: 1px solid #A7F3D0;
+      color: var(--emerald-600);
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 800;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* ADMIN RULE CUSTOMIZATION BANNER */
     .rule-customizer-panel {
       background: #EEF2FF;
       border: 2px solid #6366F1;
@@ -164,10 +178,6 @@
       color: var(--brand-600);
       font-family: 'JetBrains Mono', monospace;
       outline: none;
-    }
-
-    .rule-input-field:focus {
-      border-color: var(--brand-600);
     }
 
     .summary-grid {
@@ -245,14 +255,13 @@
       display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); font-size: 11px;
     }
 
-    /* Modal Form Customization Styles */
     .modal-overlay {
       position: fixed; inset: 0; background: rgba(15, 23, 42, 0.4);
       z-index: 100; display: flex; align-items: center; justify-content: center; padding: 16px;
     }
 
     .modal-card {
-      background: #FFFFFF; width: 100%; max-width: 680px;
+      background: #FFFFFF; width: 100%; max-width: 600px;
       border-radius: var(--radius); padding: 22px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);
       max-height: 90vh; overflow-y: auto;
     }
@@ -276,9 +285,9 @@
     .form-select, .form-num-input, .form-text-input {
       background: #FFFFFF;
       border: 1px solid var(--border);
-      padding: 7px 10px;
+      padding: 8px 12px;
       border-radius: 6px;
-      font-size: 12px;
+      font-size: 13px;
       font-weight: 600;
       color: var(--text-main);
       outline: none;
@@ -309,25 +318,16 @@
       <div>
         <div class="trust-tag">T.M.H.N.U. Educational Trust, Theni</div>
         <h1 class="header-title">Nadar Saraswathi Staffing Calculator</h1>
-        <p class="header-sub">Customizable staffing rules & campus recruitment calculator</p>
+        <p class="header-sub">Staff recruitment norms and campus calculator</p>
       </div>
-      <div class="header-actions">
-        <button class="btn btn-primary" onclick="openAddModal()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          + Add Campus
-        </button>
-        <button class="btn btn-secondary" onclick="exportCSV()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          CSV
-        </button>
-      </div>
+      <div class="header-actions" id="headerActions"></div>
     </header>
 
-    <!-- ALWAYS VISIBLE PROMINENT GLOBAL RULES CUSTOMIZER PANEL -->
-    <div class="rule-customizer-panel" id="globalRulesPanel">
+    <!-- ADMIN RULE CUSTOMIZATION BANNER (Only visible when logged in as Admin) -->
+    <div class="rule-customizer-panel" id="adminRulePanel" style="display: none;">
       <div class="panel-head">
         <div class="panel-title">
-          ⚙️ Customize Trust Staffing Rules & Ratios (Live Recalculation Engine)
+          👑 Admin Panel: Trust Staffing Rules & Ratios (Live Recalculation Engine)
         </div>
         <button class="btn btn-secondary btn-sm" onclick="resetGlobalRules()">Reset Default Rules</button>
       </div>
@@ -384,6 +384,37 @@
     </div>
 
     <div class="cards-grid" id="cardsGrid"></div>
+  </div>
+
+  <!-- ADMIN LOGIN MODAL -->
+  <div class="modal-overlay" id="loginModal" style="display: none;">
+    <div class="modal-card" style="max-width: 400px;">
+      <div class="modal-head">
+        <h2 style="font-size: 16px; font-weight: 800;">🔐 Admin Panel Login</h2>
+        <button class="btn btn-secondary" style="padding: 3px 8px; font-size: 12px;" onclick="closeLoginModal()">✕</button>
+      </div>
+
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">Enter admin credentials to unlock rule customization & campus controls:</p>
+
+      <div style="display: flex; flex-direction: column; gap: 10px;">
+        <div class="form-field">
+          <label class="form-label">Username</label>
+          <input type="text" id="admin_user" placeholder="admin" class="form-text-input"/>
+        </div>
+        <div class="form-field">
+          <label class="form-label">Password</label>
+          <input type="password" id="admin_pass" placeholder="•••••" class="form-text-input"/>
+        </div>
+        <div id="loginError" style="color: var(--rose-600); font-size: 12px; font-weight: 700; display: none; margin-top: 4px;">
+          ❌ Incorrect username or password (use admin / admin)
+        </div>
+      </div>
+
+      <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 6px;">
+        <button class="btn btn-secondary" onclick="closeLoginModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="submitLogin()">Login as Admin</button>
+      </div>
+    </div>
   </div>
 
   <!-- Edit Staffing Rules & Class Breakdown Modal -->
@@ -459,6 +490,8 @@
       MATRIC: "Matriculation Schools",
       AIDED: "Aided Primary & Secondary Schools"
     };
+
+    let isAdmin = false;
 
     let globalRules = {
       enggRatio: 15,
@@ -715,7 +748,36 @@
       return { students, required, current, needed, filledPct };
     }
 
+    function renderHeaderActions() {
+      const container = document.getElementById("headerActions");
+      if (isAdmin) {
+        container.innerHTML = `
+          <span class="admin-badge">👑 Admin Mode</span>
+          <button class="btn btn-primary" onclick="openAddModal()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            + Add Campus
+          </button>
+          <button class="btn btn-danger" onclick="logoutAdmin()">Logout</button>
+          <button class="btn btn-secondary" onclick="exportCSV()">CSV</button>
+        `;
+        document.getElementById("adminRulePanel").style.display = "block";
+      } else {
+        container.innerHTML = `
+          <button class="btn btn-primary" onclick="openLoginModal()">
+            🔐 Admin Login
+          </button>
+          <button class="btn btn-secondary" onclick="exportCSV()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            CSV Report
+          </button>
+        `;
+        document.getElementById("adminRulePanel").style.display = "none";
+      }
+    }
+
     function render() {
+      renderHeaderActions();
+
       let totStudents = 0, totReq = 0, totCurr = 0, totNeeded = 0;
       state.institutions.forEach(inst => {
         const m = calcMetrics(inst);
@@ -790,30 +852,67 @@
                 </div>
                 <div>
                   <div class="metric-head">Current Staff</div>
-                  <div class="stepper">
-                    <button class="step-btn" onclick="updateFaculty('${inst.id}', -1)">-</button>
-                    <span class="step-val">${m.current}</span>
-                    <button class="step-btn" onclick="updateFaculty('${inst.id}', 1)">+</button>
-                  </div>
+                  ${isAdmin ? `
+                    <div class="stepper">
+                      <button class="step-btn" onclick="updateFaculty('${inst.id}', -1)">-</button>
+                      <span class="step-val">${m.current}</span>
+                      <button class="step-btn" onclick="updateFaculty('${inst.id}', 1)">+</button>
+                    </div>
+                  ` : `
+                    <div class="metric-num">${m.current}</div>
+                  `}
                 </div>
               </div>
             </div>
 
             <div class="card-footer">
               <span style="color: var(--text-muted);">Rule: ${inst.ruleType === 'per_section' ? (inst.teachersPerSection || globalRules.matricPerSec) + '/sec' : '1:' + (inst.id === 'nscet' ? globalRules.enggRatio : (inst.id === 'nscas' ? globalRules.artsRatio : inst.targetRatio))}</span>
-              <button class="btn btn-secondary btn-sm" onclick="openEditModal('${inst.id}')">⚙️ Customize Rules</button>
+              ${isAdmin ? `
+                <button class="btn btn-secondary btn-sm" onclick="openEditModal('${inst.id}')">⚙️ Customize Rules</button>
+              ` : `
+                <button class="btn btn-secondary btn-sm" onclick="promptAdminLogin()">🔒 Admin Edit</button>
+              `}
             </div>
           </div>
         `;
       }).join('');
     }
 
+    /* AUTHENTICATION CONTROL */
+    window.openLoginModal = () => {
+      document.getElementById("loginError").style.display = "none";
+      document.getElementById("loginModal").style.display = "flex";
+    };
+    window.closeLoginModal = () => {
+      document.getElementById("loginModal").style.display = "none";
+    };
+    window.submitLogin = () => {
+      const u = document.getElementById("admin_user").value.trim();
+      const p = document.getElementById("admin_pass").value.trim();
+      if (u === "admin" && p === "admin") {
+        isAdmin = true;
+        closeLoginModal();
+        render();
+      } else {
+        document.getElementById("loginError").style.display = "block";
+      }
+    };
+    window.logoutAdmin = () => {
+      isAdmin = false;
+      render();
+    };
+    window.promptAdminLogin = () => {
+      openLoginModal();
+    };
+
     window.updateGlobalRule = (field, val) => {
+      if (!isAdmin) { promptAdminLogin(); return; }
       globalRules[field] = parseFloat(val) || 1;
       render();
     };
 
     window.resetGlobalRules = () => {
+      if (!isAdmin) { promptAdminLogin(); return; }
       globalRules = { enggRatio: 15, artsRatio: 20, matricPerSec: 1.5, maxPerSection: 40 };
       document.getElementById("rule_engg_ratio").value = 15;
       document.getElementById("rule_arts_ratio").value = 20;
@@ -823,6 +922,7 @@
     };
 
     window.updateFaculty = (id, delta) => {
+      if (!isAdmin) { promptAdminLogin(); return; }
       state.institutions = state.institutions.map(i => i.id === id ? { ...i, currentFaculty: Math.max(0, i.currentFaculty + delta) } : i);
       render();
     };
@@ -839,12 +939,14 @@
 
     /* ADD NEW CAMPUS MODAL CONTROLS */
     window.openAddModal = () => {
+      if (!isAdmin) { promptAdminLogin(); return; }
       document.getElementById("addCampusModal").style.display = "flex";
     };
     window.closeAddModal = () => {
       document.getElementById("addCampusModal").style.display = "none";
     };
     window.saveNewCampus = () => {
+      if (!isAdmin) { promptAdminLogin(); return; }
       const name = document.getElementById("new_name").value.trim() || "New Nadar Saraswathi Campus";
       const cat = document.getElementById("new_cat").value;
       const type = document.getElementById("new_type").value.trim() || "Higher Secondary / College";
@@ -876,6 +978,7 @@
 
     /* EDIT CAMPUS RULES MODAL CONTROLS */
     window.openEditModal = (id) => {
+      if (!isAdmin) { promptAdminLogin(); return; }
       const original = state.institutions.find(i => i.id === id);
       state.editingInst = JSON.parse(JSON.stringify(original));
       renderModalContent();
