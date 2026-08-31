@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>Nadar Saraswathi Institutions - Staffing Calculator</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;800&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-body: #F8FAFC;
+      --bg-card: #FFFFFF;
+      --bg-slate: #F1F5F9;
+
+      --text-main: #0F172A;
+      --text-muted: #475569;
+      --text-light: #94A3B8;
+
+      --brand-600: #4F46E5;
+      --emerald-600: #059669;
+      --emerald-50: #ECFDF5;
+      --rose-600: #E11D48;
+      --rose-50: #FFF1F2;
+
+      --border: #E2E8F0;
+      --shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
+      --radius: 12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg-body);
+      color: var(--text-main);
+      min-height: 100vh;
+      line-height: 1.4;
+      padding-bottom: 40px;
+    }
+
+    .font-mono { font-family: 'JetBrains Mono', monospace; }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px;
+    }
+
+    /* Fixed Strict SVG Icon Styles */
+    svg, .icon-svg {
+      width: 16px !important;
+      height: 16px !important;
+      min-width: 16px !important;
+      min-height: 16px !important;
+      max-width: 16px !important;
+      max-height: 16px !important;
+      flex-shrink: 0 !important;
+      display: inline-block !important;
+      vertical-align: middle !important;
+    }
+
+    /* Clean Compact Header */
+    .app-header {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .trust-tag {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--brand-600);
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .header-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: var(--text-main);
+      margin-top: 2px;
+    }
+
+    .header-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn {
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      white-space: nowrap;
+    }
+
+    .btn-primary { background: var(--brand-600); color: #FFF; }
+    .btn-secondary { background: var(--bg-slate); border: 1px solid var(--border); color: var(--text-main); }
+    .btn-sm { padding: 5px 10px; font-size: 11px; }
+
+    /* Uniform Summary Grid */
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .summary-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .summary-card.alert {
+      background: var(--rose-50);
+      border-color: #FECDD3;
+    }
+
+    .summary-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .summary-val {
+      font-size: 24px;
+      font-weight: 800;
+      font-family: 'JetBrains Mono', monospace;
+      margin-top: 2px;
+    }
+
+    .text-indigo { color: var(--brand-600); }
+    .text-emerald { color: var(--emerald-600); }
+    .text-rose { color: var(--rose-600); }
+
+    /* Controls Bar */
+    .controls-bar {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 10px 14px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tab-group {
+      display: flex;
+      background: var(--bg-slate);
+      padding: 3px;
+      border-radius: 8px;
+      gap: 2px;
+      flex-wrap: wrap;
+    }
+
+    .tab-btn {
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-weight: 700;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+    }
+
+    .tab-btn.active {
+      background: #FFFFFF;
+      color: var(--brand-600);
+      box-shadow: 0 1px 2px rgba(0,0,0,0.08);
+    }
+
+    .search-input {
+      background: var(--bg-slate);
+      border: 1px solid var(--border);
+      padding: 7px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      outline: none;
+      width: 200px;
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(330px, 1fr));
+      gap: 14px;
+    }
+
+    .inst-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 16px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .inst-card.needs-staff { border-left: 4px solid var(--rose-600); }
+    .inst-card.staffed { border-left: 4px solid var(--emerald-600); }
+
+    .card-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 10px;
+      gap: 8px;
+    }
+
+    .inst-name {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-main);
+      line-height: 1.3;
+    }
+
+    .inst-type {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--brand-600);
+      margin-top: 1px;
+    }
+
+    .status-badge {
+      padding: 3px 8px;
+      border-radius: 12px;
+      font-size: 10px;
+      font-weight: 800;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .badge-rose { background: var(--rose-50); color: var(--rose-600); border: 1px solid #FECDD3; }
+    .badge-emerald { background: var(--emerald-50); color: var(--emerald-600); border: 1px solid #A7F3D0; }
+
+    /* Progress bar */
+    .progress-box { margin-bottom: 12px; }
+    .progress-text { display: flex; justify-content: space-between; font-size: 10px; font-weight: 700; margin-bottom: 4px; }
+    .progress-bar { height: 6px; background: var(--bg-slate); border-radius: 3px; overflow: hidden; }
+    .progress-fill { height: 100%; border-radius: 3px; }
+
+    /* Metrics Grid */
+    .metrics-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+      background: var(--bg-slate);
+      padding: 8px;
+      border-radius: 8px;
+      margin-bottom: 12px;
+      text-align: center;
+    }
+
+    .metric-head { font-size: 9px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+    .metric-num { font-size: 16px; font-weight: 800; font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
+
+    /* Stepper */
+    .stepper { display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 2px; }
+    .step-btn {
+      width: 24px;
+      height: 24px;
+      min-width: 24px;
+      border-radius: 4px;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      font-weight: 800;
+      font-size: 14px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .step-val { font-size: 14px; font-weight: 800; font-family: 'JetBrains Mono', monospace; color: var(--brand-600); min-width: 20px; text-align: center; }
+
+    .card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 8px;
+      border-top: 1px solid var(--border);
+      font-size: 11px;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(15, 23, 42, 0.4);
+      z-index: 100; display: flex; align-items: center; justify-content: center; padding: 16px;
+    }
+
+    .modal-card {
+      background: #FFFFFF; width: 100%; max-width: 540px;
+      border-radius: var(--radius); padding: 20px; box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+      max-height: 85vh; overflow-y: auto;
+    }
+
+    .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+    .ui-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 10px; }
+    .ui-table th { background: var(--bg-slate); padding: 6px 8px; text-align: left; font-weight: 700; color: var(--text-muted); }
+    .ui-table td { padding: 6px 8px; border-bottom: 1px solid var(--border); }
+    .table-input { width: 100%; padding: 5px; border: 1px solid var(--border); border-radius: 4px; font-size: 12px; }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .summary-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
+      .summary-card { padding: 10px 12px; }
+      .summary-val { font-size: 20px; }
+      .cards-grid { grid-template-columns: 1fr; }
+      .controls-bar { flex-direction: column; align-items: stretch; }
+      .search-input { width: 100%; }
+      .app-header { flex-direction: column; align-items: stretch; padding: 14px; }
+      .header-actions { width: 100%; justify-content: space-between; }
+      .header-actions button { flex: 1; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <header class="app-header">
+      <div>
+        <div class="trust-tag">T.M.H.N.U. Educational Trust, Theni</div>
+        <h1 class="header-title">Nadar Saraswathi Staffing Calculator</h1>
+        <p class="header-sub">Staff recruitment norms and student count planner</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-secondary" onclick="exportCSV()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          CSV
+        </button>
+        <button class="btn btn-primary" onclick="openAddModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+          Add Campus
+        </button>
+      </div>
+    </header>
+
+    <!-- Top Summary Grid -->
+    <div class="summary-grid" id="summaryDeck"></div>
+
+    <!-- Controls Bar -->
+    <div class="controls-bar">
+      <div class="tab-group" id="catTabs">
+        <button class="tab-btn active" onclick="filterCat('ALL')">All Campuses (12)</button>
+        <button class="tab-btn" onclick="filterCat('Colleges & Higher Education')">Colleges</button>
+        <button class="tab-btn" onclick="filterCat('Matriculation Schools')">Matriculation</button>
+        <button class="tab-btn" onclick="filterCat('Aided Primary & Secondary Schools')">Aided Schools</button>
+      </div>
+
+      <div>
+        <input type="text" placeholder="Search campus..." class="search-input" oninput="searchCampus(this.value)"/>
+      </div>
+    </div>
+
+    <!-- Campus Cards Grid -->
+    <div class="cards-grid" id="cardsGrid"></div>
+  </div>
+
+  <!-- Edit Department Modal -->
+  <div class="modal-overlay" id="editModal" style="display: none;">
+    <div class="modal-card">
+      <div class="modal-head">
+        <h2 id="modalTitle" style="font-size: 16px; font-weight: 800;">Configure Campus</h2>
+        <button class="btn btn-secondary" style="padding: 3px 8px; font-size: 12px;" onclick="closeModal()">✕</button>
+      </div>
+      <div id="modalContent"></div>
+      <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 6px;">
+        <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveModal()">Save Changes</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const CATEGORIES = {
+      COLLEGES: "Colleges & Higher Education",
+      MATRIC: "Matriculation Schools",
+      AIDED: "Aided Primary & Secondary Schools"
+    };
+
+    const INITIAL_INSTITUTIONS = [
+      {
+        id: "nscet",
+        name: "Nadar Saraswathi College of Engineering & Tech",
+        category: CATEGORIES.COLLEGES,
+        type: "AICTE Engineering",
+        ruleType: "ratio",
+        targetRatio: 15,
+        maxPerSection: 60,
+        currentFaculty: 82,
+        breakdown: [
+          { id: "b1", name: "Computer Science & Engg", students: 360, maxPerSec: 60 },
+          { id: "b2", name: "Electronics & Comm Engg", students: 240, maxPerSec: 60 },
+          { id: "b3", name: "Electrical & Electronics Engg", students: 180, maxPerSec: 60 },
+          { id: "b4", name: "Mechanical Engineering", students: 180, maxPerSec: 60 },
+          { id: "b5", name: "Civil Engineering", students: 120, maxPerSec: 60 },
+          { id: "b6", name: "AI & Data Science", students: 180, maxPerSec: 60 },
+          { id: "b7", name: "Science & Humanities (1st Year)", students: 300, maxPerSec: 60 }
+        ]
+      },
+      {
+        id: "nscas",
+        name: "Nadar Saraswathi College of Arts & Science",
+        category: CATEGORIES.COLLEGES,
+        type: "UGC Arts & Science",
+        ruleType: "ratio",
+        targetRatio: 20,
+        maxPerSection: 60,
+        currentFaculty: 98,
+        breakdown: [
+          { id: "b1", name: "Commerce & Management", students: 520, maxPerSec: 60 },
+          { id: "b2", name: "Computer Applications (BCA/B.Sc)", students: 480, maxPerSec: 60 },
+          { id: "b3", name: "English & Literature", students: 320, maxPerSec: 60 },
+          { id: "b4", name: "Mathematics & Physics", students: 360, maxPerSec: 60 },
+          { id: "b5", name: "Chemistry & Microbiology", students: 280, maxPerSec: 60 },
+          { id: "b6", name: "Postgraduate & Research", students: 240, maxPerSec: 60 }
+        ]
+      },
+      {
+        id: "nsced",
+        name: "Nadar Saraswathi College of Education",
+        category: CATEGORIES.COLLEGES,
+        type: "NCTE Teacher Training (B.Ed)",
+        ruleType: "ratio",
+        targetRatio: 15,
+        maxPerSection: 50,
+        currentFaculty: 18,
+        breakdown: [
+          { id: "b1", name: "Pedagogy of English & Tamil", students: 80, maxPerSec: 50 },
+          { id: "b2", name: "Pedagogy of Mathematics & Science", students: 90, maxPerSec: 50 },
+          { id: "b3", name: "Pedagogy of Social Science", students: 50, maxPerSec: 50 },
+          { id: "b4", name: "M.Ed & Educational Research", students: 40, maxPerSec: 50 }
+        ]
+      },
+      {
+        id: "wits",
+        name: "Women's Industrial Training School",
+        category: CATEGORIES.COLLEGES,
+        type: "NCVT ITI Vocational",
+        ruleType: "ratio",
+        targetRatio: 20,
+        maxPerSection: 40,
+        currentFaculty: 14,
+        breakdown: [
+          { id: "b1", name: "COPA Trade", students: 80, maxPerSec: 40 },
+          { id: "b2", name: "Electronics Mechanic", students: 60, maxPerSec: 40 },
+          { id: "b3", name: "Fashion Design & Sewing", students: 70, maxPerSec: 40 },
+          { id: "b4", name: "Electrician Trade", students: 50, maxPerSec: 40 }
+        ]
+      },
+      {
+        id: "nsnps",
+        name: "NS Nursery & primary school Theni",
+        category: CATEGORIES.MATRIC,
+        type: "Nursery & Primary",
+        ruleType: "nursery_primary",
+        targetRatio: 25,
+        maxPerSection: 30,
+        currentFaculty: 22,
+        breakdown: [
+          { id: "b1", name: "Pre-KG / Nursery", students: 90, maxPerSec: 30 },
+          { id: "b2", name: "LKG & UKG", students: 150, maxPerSec: 30 },
+          { id: "b3", name: "Classes 1 to 3", students: 180, maxPerSec: 30 },
+          { id: "b4", name: "Classes 4 to 5", students: 140, maxPerSec: 30 }
+        ]
+      },
+      {
+        id: "tmhnu_muthu",
+        name: "T.M.H.N.U. Matric Hr. Sec. School, Muthuthevanpatti",
+        category: CATEGORIES.MATRIC,
+        type: "Matriculation (1-12)",
+        ruleType: "per_section",
+        targetRatio: 35,
+        maxPerSection: 45,
+        teachersPerSection: 1.5,
+        currentFaculty: 58,
+        breakdown: [
+          { id: "b1", name: "Primary (Classes 1-5)", students: 450, maxPerSec: 40 },
+          { id: "b2", name: "Upper Primary (Classes 6-8)", students: 380, maxPerSec: 45 },
+          { id: "b3", name: "High School (Classes 9-10)", students: 310, maxPerSec: 45 },
+          { id: "b4", name: "Higher Sec (Classes 11-12)", students: 280, maxPerSec: 45 }
+        ]
+      },
+      {
+        id: "tmhnu_vidya",
+        name: "T.M.H.N.U. Vidyalaya Matric Hr. Sec. School, Theni",
+        category: CATEGORIES.MATRIC,
+        type: "Matriculation (Pre-K to 12)",
+        ruleType: "per_section",
+        targetRatio: 35,
+        maxPerSection: 40,
+        teachersPerSection: 1.5,
+        currentFaculty: 65,
+        breakdown: [
+          { id: "b1", name: "Pre-KG & Kindergarten", students: 160, maxPerSec: 30 },
+          { id: "b2", name: "Primary (Classes 1-5)", students: 500, maxPerSec: 40 },
+          { id: "b3", name: "Upper Primary (Classes 6-8)", students: 420, maxPerSec: 40 },
+          { id: "b4", name: "High & Hr Sec (Classes 9-12)", students: 540, maxPerSec: 45 }
+        ]
+      },
+      {
+        id: "tmhnu_girls_vada",
+        name: "T.M.H.N.U. Girls Matric Hr. Sec. School, Vadapudupatti",
+        category: CATEGORIES.MATRIC,
+        type: "Girls Matriculation",
+        ruleType: "per_section",
+        targetRatio: 35,
+        maxPerSection: 42,
+        teachersPerSection: 1.5,
+        currentFaculty: 52,
+        breakdown: [
+          { id: "b1", name: "Primary (Classes 1-5)", students: 380, maxPerSec: 40 },
+          { id: "b2", name: "Upper Primary (Classes 6-8)", students: 340, maxPerSec: 42 },
+          { id: "b3", name: "High & Hr Sec (Classes 9-12)", students: 460, maxPerSec: 45 }
+        ]
+      },
+      {
+        id: "ns_public",
+        name: "NS Public school Vadapudhupatti",
+        category: CATEGORIES.MATRIC,
+        type: "CBSE School (Pre-K to 12)",
+        ruleType: "per_section",
+        targetRatio: 30,
+        maxPerSection: 40,
+        teachersPerSection: 1.5,
+        currentFaculty: 42,
+        breakdown: [
+          { id: "b1", name: "Kindergarten (Pre-K to UKG)", students: 140, maxPerSec: 30 },
+          { id: "b2", name: "Primary CBSE (1-5)", students: 360, maxPerSec: 40 },
+          { id: "b3", name: "Middle School CBSE (6-8)", students: 280, maxPerSec: 40 },
+          { id: "b4", name: "Secondary CBSE (9-12)", students: 220, maxPerSec: 40 }
+        ]
+      },
+      {
+        id: "ns_hr_sec",
+        name: "Nadar Saraswathi Hr. Sec. School, Theni",
+        category: CATEGORIES.AIDED,
+        type: "Govt / Aided (6-12)",
+        ruleType: "subject_based",
+        targetRatio: 37,
+        maxPerSection: 40,
+        currentFaculty: 46,
+        breakdown: [
+          { id: "b1", name: "Upper Primary (Classes 6-8)", students: 540, maxPerSec: 40 },
+          { id: "b2", name: "High School (Classes 9-10)", students: 480, maxPerSec: 40 },
+          { id: "b3", name: "Higher Sec (Classes 11-12)", students: 420, maxPerSec: 40 }
+        ]
+      },
+      {
+        id: "ns_girls_hr_sec",
+        name: "Nadar Saraswathi Girls Hr. Sec. School, Theni",
+        category: CATEGORIES.AIDED,
+        type: "Govt / Aided Girls (6-12)",
+        ruleType: "subject_based",
+        targetRatio: 37,
+        maxPerSection: 40,
+        currentFaculty: 44,
+        breakdown: [
+          { id: "b1", name: "Upper Primary (Classes 6-8)", students: 510, maxPerSec: 40 },
+          { id: "b2", name: "High School (Classes 9-10)", students: 460, maxPerSec: 40 },
+          { id: "b3", name: "Higher Sec (Classes 11-12)", students: 390, maxPerSec: 40 }
+        ]
+      },
+      {
+        id: "ns_primary",
+        name: "Nadar Saraswathi Primary School",
+        category: CATEGORIES.AIDED,
+        type: "Govt / Aided Primary (1-5)",
+        ruleType: "nursery_primary",
+        targetRatio: 30,
+        maxPerSection: 30,
+        currentFaculty: 16,
+        breakdown: [
+          { id: "b1", name: "Nursery / KG", students: 60, maxPerSec: 30 },
+          { id: "b2", name: "Classes 1 to 3", students: 210, maxPerSec: 30 },
+          { id: "b3", name: "Classes 4 to 5", students: 160, maxPerSec: 30 }
+        ]
+      }
+    ];
+
+    let state = {
+      institutions: JSON.parse(JSON.stringify(INITIAL_INSTITUTIONS)),
+      selectedCat: "ALL",
+      searchQuery: "",
+      editingId: null
+    };
+
+    function calcMetrics(inst) {
+      let students = 0;
+      let required = 0;
+      if (inst.breakdown && inst.breakdown.length > 0) {
+        inst.breakdown.forEach(sub => {
+          const count = Number(sub.students) || 0;
+          students += count;
+          const maxSec = Number(sub.maxPerSec) || Number(inst.maxPerSection) || 40;
+          const sec = Math.max(1, Math.ceil(count / maxSec));
+
+          if (inst.ruleType === "per_section") {
+            required += Math.ceil(sec * (inst.teachersPerSection || 1.5));
+          } else if (inst.ruleType === "nursery_primary") {
+            required += (count < 60) ? Math.max(2, Math.ceil(count / 20)) : Math.max(2, Math.ceil(count / 30));
+          } else {
+            required += Math.ceil(count / (inst.targetRatio || 20));
+          }
+        });
+      } else {
+        students = 500;
+        required = Math.ceil(students / (inst.targetRatio || 20));
+      }
+      const current = Number(inst.currentFaculty) || 0;
+      const needed = Math.max(0, required - current);
+      const filledPct = required > 0 ? Math.min(100, Math.round((current / required) * 100)) : 100;
+      return { students, required, current, needed, filledPct };
+    }
+
+    function render() {
+      let totStudents = 0, totReq = 0, totCurr = 0, totNeeded = 0;
+      state.institutions.forEach(inst => {
+        const m = calcMetrics(inst);
+        totStudents += m.students;
+        totReq += m.required;
+        totCurr += m.current;
+        totNeeded += m.needed;
+      });
+
+      document.getElementById("summaryDeck").innerHTML = `
+        <div class="summary-card">
+          <div class="summary-label">Total Campuses</div>
+          <div class="summary-val text-indigo">${state.institutions.length}</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">Total Students</div>
+          <div class="summary-val">${totStudents.toLocaleString()}</div>
+        </div>
+        <div class="summary-card">
+          <div class="summary-label">Required Staff</div>
+          <div class="summary-val text-indigo">${totReq}</div>
+        </div>
+        <div class="summary-card ${totNeeded > 0 ? 'alert' : ''}">
+          <div class="summary-label">Appointments Needed</div>
+          <div class="summary-val text-rose">${totNeeded > 0 ? '+' + totNeeded : '0'}</div>
+        </div>
+      `;
+
+      const filtered = state.institutions.filter(inst => {
+        const matchCat = state.selectedCat === "ALL" || inst.category === state.selectedCat;
+        const q = state.searchQuery.toLowerCase().trim();
+        const matchSearch = !q || inst.name.toLowerCase().includes(q);
+        return matchCat && matchSearch;
+      });
+
+      document.getElementById("cardsGrid").innerHTML = filtered.map(inst => {
+        const m = calcMetrics(inst);
+        const needsHiring = m.needed > 0;
+        return `
+          <div class="inst-card ${needsHiring ? 'needs-staff' : 'staffed'}">
+            <div>
+              <div class="card-head">
+                <div>
+                  <div class="inst-name">${inst.name}</div>
+                  <div class="inst-type">${inst.type}</div>
+                </div>
+                <div>
+                  ${needsHiring ? `<span class="status-badge badge-rose">+${m.needed} Needed</span>` : `<span class="status-badge badge-emerald">Fully Staffed</span>`}
+                </div>
+              </div>
+
+              <!-- Progress Bar -->
+              <div class="progress-box">
+                <div class="progress-text">
+                  <span>Staffing Progress</span>
+                  <span class="${needsHiring ? 'text-rose' : 'text-emerald'}">${m.current} / ${m.required} (${m.filledPct}%)</span>
+                </div>
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: ${m.filledPct}%; background: ${needsHiring ? 'var(--rose-600)' : 'var(--emerald-600)'}"></div>
+                </div>
+              </div>
+
+              <!-- 3 Clear Metrics -->
+              <div class="metrics-row">
+                <div>
+                  <div class="metric-head">Students</div>
+                  <div class="metric-num">${m.students.toLocaleString()}</div>
+                </div>
+                <div>
+                  <div class="metric-head">Required</div>
+                  <div class="metric-num text-indigo">${m.required}</div>
+                </div>
+                <div>
+                  <div class="metric-head">Current Staff</div>
+                  <div class="stepper">
+                    <button class="step-btn" onclick="updateFaculty('${inst.id}', -1)">-</button>
+                    <span class="step-val">${m.current}</span>
+                    <button class="step-btn" onclick="updateFaculty('${inst.id}', 1)">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card-footer">
+              <span style="color: var(--text-muted);">Rule: ${inst.ruleType === 'per_section' ? (inst.teachersPerSection || 1.5) + '/sec' : '1:' + inst.targetRatio}</span>
+              <button class="btn btn-secondary btn-sm" onclick="openEditModal('${inst.id}')">Configure</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    window.updateFaculty = (id, delta) => {
+      state.institutions = state.institutions.map(i => i.id === id ? { ...i, currentFaculty: Math.max(0, i.currentFaculty + delta) } : i);
+      render();
+    };
+
+    window.filterCat = (cat) => {
+      state.selectedCat = cat;
+      document.querySelectorAll(".tab-btn").forEach(btn => {
+        btn.className = `tab-btn ${btn.innerText.includes(cat === 'ALL' ? 'All' : cat.split(' ')[0]) ? 'active' : ''}`;
+      });
+      render();
+    };
+
+    window.searchCampus = (q) => { state.searchQuery = q; render(); };
+
+    window.openEditModal = (id) => {
+      state.editingId = id;
+      const inst = state.institutions.find(i => i.id === id);
+      document.getElementById("modalTitle").innerText = "Configure " + inst.name;
+      document.getElementById("modalContent").innerHTML = `
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px;">Adjust student counts per class or department:</p>
+        <table class="ui-table">
+          <thead>
+            <tr><th>Department / Class</th><th>Students Enrolled</th></tr>
+          </thead>
+          <tbody>
+            ${inst.breakdown.map((b, idx) => `
+              <tr>
+                <td>${b.name}</td>
+                <td>
+                  <input type="number" class="table-input" value="${b.students}" onchange="updateSubGroup(${idx}, this.value)"/>
+                </td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+      `;
+      document.getElementById("editModal").style.display = "flex";
+    };
+
+    window.updateSubGroup = (idx, val) => {
+      const inst = state.institutions.find(i => i.id === state.editingId);
+      inst.breakdown[idx].students = parseInt(val) || 0;
+    };
+
+    window.closeModal = () => { document.getElementById("editModal").style.display = "none"; render(); };
+    window.saveModal = () => { document.getElementById("editModal").style.display = "none"; render(); };
+
+    window.exportCSV = () => {
+      let csv = ["Institution,Category,Enrolled Students,Required Staff,Current Staff,Hiring Needed"];
+      state.institutions.forEach(i => {
+        const m = calcMetrics(i);
+        csv.push(`"${i.name}","${i.category}",${m.students},${m.required},${m.current},${m.needed}`);
+      });
+      const blob = new Blob([csv.join("\n")], { type: "text/csv" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = "Nadar_Saraswathi_Staffing_Report.csv";
+      a.click();
+    };
+
+    render();
+  </script>
+</body>
+</html>
