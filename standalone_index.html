@@ -21,6 +21,7 @@
       --text-light: #94A3B8;
 
       --brand-600: #4F46E5;
+      --brand-50: #EEF2FF;
       --emerald-600: #059669;
       --emerald-50: #ECFDF5;
       --rose-600: #E11D48;
@@ -67,7 +68,7 @@
       border: 1px solid var(--border);
       border-radius: var(--radius);
       padding: 16px 20px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
       box-shadow: var(--shadow);
       display: flex;
       justify-content: space-between;
@@ -95,7 +96,75 @@
 
     .btn-primary { background: var(--brand-600); color: #FFF; }
     .btn-secondary { background: var(--bg-slate); border: 1px solid var(--border); color: var(--text-main); }
+    .btn-outline { background: transparent; border: 1px solid var(--brand-600); color: var(--brand-600); }
     .btn-sm { padding: 5px 10px; font-size: 11px; }
+
+    /* PROMINENT RULE CUSTOMIZATION BANNER */
+    .rule-customizer-panel {
+      background: var(--brand-50);
+      border: 1.5px solid #C7D2FE;
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin-bottom: 16px;
+      box-shadow: var(--shadow);
+    }
+
+    .panel-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    .panel-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--brand-600);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .global-rules-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+    }
+
+    .rule-card-item {
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px 14px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .rule-item-label {
+      font-size: 10px;
+      font-weight: 800;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .rule-item-input-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .rule-input-field {
+      width: 100%;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--brand-600);
+      font-family: 'JetBrains Mono', monospace;
+      outline: none;
+    }
 
     .summary-grid {
       display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px;
@@ -172,7 +241,6 @@
       display: flex; justify-content: space-between; align-items: center; padding-top: 8px; border-top: 1px solid var(--border); font-size: 11px;
     }
 
-    /* Modal Form Customization Styles */
     .modal-overlay {
       position: fixed; inset: 0; background: rgba(15, 23, 42, 0.4);
       z-index: 100; display: flex; align-items: center; justify-content: center; padding: 16px;
@@ -236,19 +304,62 @@
       <div>
         <div class="trust-tag">T.M.H.N.U. Educational Trust, Theni</div>
         <h1 class="header-title">Nadar Saraswathi Staffing Calculator</h1>
-        <p class="header-sub">Staff recruitment norms and customizable rule engine</p>
+        <p class="header-sub">Customize trust staffing rules & recalculate recruitment requirements</p>
       </div>
       <div class="header-actions">
+        <button class="btn btn-outline" onclick="toggleGlobalRulesPanel()">
+          ⚙️ Customize Global Rules
+        </button>
         <button class="btn btn-secondary" onclick="exportCSV()">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           CSV
         </button>
-        <button class="btn btn-primary" onclick="openAddModal()">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-          Add Campus
-        </button>
       </div>
     </header>
+
+    <!-- PROMINENT GLOBAL RULES CUSTOMIZER PANEL -->
+    <div class="rule-customizer-panel" id="globalRulesPanel">
+      <div class="panel-head">
+        <div class="panel-title">
+          ⚙️ Customize Trust Staffing Rules & Ratios (Instant Live Recalculation)
+        </div>
+        <button class="btn btn-secondary btn-sm" onclick="resetGlobalRules()">Reset to Standard Norms</button>
+      </div>
+
+      <div class="global-rules-grid">
+        <div class="rule-card-item">
+          <span class="rule-item-label">🎓 Engineering Ratio (1 : X)</span>
+          <div class="rule-item-input-row">
+            <span style="font-size: 12px; font-weight: 700;">1 :</span>
+            <input type="number" class="rule-input-field" id="rule_engg_ratio" value="15" onchange="updateGlobalRule('enggRatio', this.value)"/>
+          </div>
+        </div>
+
+        <div class="rule-card-item">
+          <span class="rule-item-label">🎨 Arts & Science Ratio (1 : X)</span>
+          <div class="rule-item-input-row">
+            <span style="font-size: 12px; font-weight: 700;">1 :</span>
+            <input type="number" class="rule-input-field" id="rule_arts_ratio" value="20" onchange="updateGlobalRule('artsRatio', this.value)"/>
+          </div>
+        </div>
+
+        <div class="rule-card-item">
+          <span class="rule-item-label">🏫 Matric Teachers / Section</span>
+          <div class="rule-item-input-row">
+            <input type="number" step="0.1" class="rule-input-field" id="rule_matric_per_sec" value="1.5" onchange="updateGlobalRule('matricPerSec', this.value)"/>
+            <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">/ sec</span>
+          </div>
+        </div>
+
+        <div class="rule-card-item">
+          <span class="rule-item-label">📐 Max Students / Section</span>
+          <div class="rule-item-input-row">
+            <input type="number" class="rule-input-field" id="rule_max_sec" value="40" onchange="updateGlobalRule('maxPerSection', this.value)"/>
+            <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">students</span>
+          </div>
+        </div>
+      </div>
+    </div>
 
     <div class="summary-grid" id="summaryDeck"></div>
 
@@ -278,7 +389,7 @@
       <div id="modalContent"></div>
       <div style="margin-top: 16px; display: flex; justify-content: flex-end; gap: 6px;">
         <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
-        <button class="btn btn-primary" onclick="saveModal()">Save Rule Changes</button>
+        <button class="btn btn-primary" onclick="saveModal()">Save Changes</button>
       </div>
     </div>
   </div>
@@ -288,6 +399,13 @@
       COLLEGES: "Colleges & Higher Education",
       MATRIC: "Matriculation Schools",
       AIDED: "Aided Primary & Secondary Schools"
+    };
+
+    let globalRules = {
+      enggRatio: 15,
+      artsRatio: 20,
+      matricPerSec: 1.5,
+      maxPerSection: 40
     };
 
     const INITIAL_INSTITUTIONS = [
@@ -512,15 +630,20 @@
         inst.breakdown.forEach(sub => {
           const count = Number(sub.students) || 0;
           students += count;
-          const maxSec = Number(sub.maxPerSec) || Number(inst.maxPerSection) || 40;
+          const maxSec = Number(sub.maxPerSec) || Number(inst.maxPerSection) || Number(globalRules.maxPerSection) || 40;
           const sec = Math.max(1, Math.ceil(count / maxSec));
 
           if (inst.ruleType === "per_section") {
-            required += Math.ceil(sec * (Number(inst.teachersPerSection) || 1.5));
+            const perSec = Number(inst.teachersPerSection) || Number(globalRules.matricPerSec) || 1.5;
+            required += Math.ceil(sec * perSec);
           } else if (inst.ruleType === "nursery_primary") {
             required += (count < 60) ? Math.max(2, Math.ceil(count / 20)) : Math.max(2, Math.ceil(count / 30));
           } else {
-            required += Math.ceil(count / (Number(inst.targetRatio) || 20));
+            let ratio = Number(inst.targetRatio);
+            if (inst.id === 'nscet') ratio = Number(globalRules.enggRatio) || 15;
+            else if (inst.id === 'nscas') ratio = Number(globalRules.artsRatio) || 20;
+            else ratio = ratio || 20;
+            required += Math.ceil(count / ratio);
           }
         });
       } else {
@@ -618,13 +741,32 @@
             </div>
 
             <div class="card-footer">
-              <span style="color: var(--text-muted);">Rule: ${inst.ruleType === 'per_section' ? (inst.teachersPerSection || 1.5) + '/sec' : '1:' + inst.targetRatio}</span>
+              <span style="color: var(--text-muted);">Rule: ${inst.ruleType === 'per_section' ? (inst.teachersPerSection || globalRules.matricPerSec) + '/sec' : '1:' + (inst.id === 'nscet' ? globalRules.enggRatio : (inst.id === 'nscas' ? globalRules.artsRatio : inst.targetRatio))}</span>
               <button class="btn btn-secondary btn-sm" onclick="openEditModal('${inst.id}')">⚙️ Customize Rules</button>
             </div>
           </div>
         `;
       }).join('');
     }
+
+    window.updateGlobalRule = (field, val) => {
+      globalRules[field] = parseFloat(val) || 1;
+      render();
+    };
+
+    window.resetGlobalRules = () => {
+      globalRules = { enggRatio: 15, artsRatio: 20, matricPerSec: 1.5, maxPerSection: 40 };
+      document.getElementById("rule_engg_ratio").value = 15;
+      document.getElementById("rule_arts_ratio").value = 20;
+      document.getElementById("rule_matric_per_sec").value = 1.5;
+      document.getElementById("rule_max_sec").value = 40;
+      render();
+    };
+
+    window.toggleGlobalRulesPanel = () => {
+      const p = document.getElementById("globalRulesPanel");
+      p.style.display = p.style.display === "none" ? "block" : "none";
+    };
 
     window.updateFaculty = (id, delta) => {
       state.institutions = state.institutions.map(i => i.id === id ? { ...i, currentFaculty: Math.max(0, i.currentFaculty + delta) } : i);
@@ -654,7 +796,6 @@
 
       document.getElementById("modalTitle").innerText = "Customize Rules: " + inst.name;
       document.getElementById("modalContent").innerHTML = `
-        <!-- Rule Parameter Customization Form -->
         <div class="rule-form-grid">
           <div class="form-field">
             <label class="form-label">Staffing Rule Model</label>
@@ -689,7 +830,7 @@
           </div>
         </div>
 
-        <div style="background: var(--primary-50); padding: 10px 14px; border-radius: 8px; font-size: 12px; margin-bottom: 14px; display: flex; justify-content: space-between;">
+        <div style="background: var(--brand-50); padding: 10px 14px; border-radius: 8px; font-size: 12px; margin-bottom: 14px; display: flex; justify-content: space-between;">
           <span>Calculated Required Norm: <strong class="text-indigo">${m.required} Staff</strong></span>
           <span>Appointments Needed: <strong class="${m.needed > 0 ? 'text-rose' : 'text-emerald'}">${m.needed > 0 ? '+' + m.needed : '0'}</strong></span>
         </div>
