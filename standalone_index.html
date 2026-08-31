@@ -29,7 +29,7 @@
 
       --border: #E2E8F0;
       --shadow: 0 2px 8px rgba(15, 23, 42, 0.06);
-      --radius: 12px;
+      --radius: 14px;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -40,13 +40,13 @@
       color: var(--text-main);
       min-height: 100vh;
       line-height: 1.4;
-      padding-bottom: 40px;
+      padding-bottom: 50px;
     }
 
     .font-mono { font-family: 'JetBrains Mono', monospace; }
 
     .container {
-      max-width: 1100px;
+      max-width: 1150px;
       margin: 0 auto;
       padding: 16px;
     }
@@ -63,18 +63,19 @@
       vertical-align: middle !important;
     }
 
+    /* Front Page Header */
     .app-header {
       background: var(--bg-card);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      padding: 16px 20px;
-      margin-bottom: 14px;
+      padding: 18px 22px;
+      margin-bottom: 16px;
       box-shadow: var(--shadow);
       display: flex;
       justify-content: space-between;
       align-items: center;
       flex-wrap: wrap;
-      gap: 12px;
+      gap: 14px;
     }
 
     .trust-tag {
@@ -85,9 +86,38 @@
       letter-spacing: 0.8px;
     }
 
-    .header-title { font-size: 20px; font-weight: 800; color: var(--text-main); margin-top: 2px; }
+    .header-title { font-size: 22px; font-weight: 800; color: var(--text-main); margin-top: 2px; }
     .header-sub { font-size: 12px; color: var(--text-muted); }
-    .header-actions { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+    /* FRONT PAGE MAIN PORTAL SWITCHER TABS */
+    .portal-switcher {
+      display: flex;
+      background: var(--bg-slate);
+      padding: 4px;
+      border-radius: 10px;
+      gap: 4px;
+    }
+
+    .portal-tab {
+      padding: 9px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      font-weight: 800;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.15s ease;
+    }
+
+    .portal-tab.active {
+      background: #FFFFFF;
+      color: var(--brand-600);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    }
 
     .btn {
       padding: 8px 14px; border-radius: 8px; font-size: 12px; font-weight: 700;
@@ -96,57 +126,55 @@
 
     .btn-primary { background: var(--brand-600); color: #FFF; }
     .btn-secondary { background: var(--bg-slate); border: 1px solid var(--border); color: var(--text-main); }
-    .btn-outline { background: transparent; border: 1px solid var(--brand-600); color: var(--brand-600); }
     .btn-danger { background: var(--rose-50); border: 1px solid #FECDD3; color: var(--rose-600); }
     .btn-sm { padding: 5px 10px; font-size: 11px; }
 
-    .admin-badge {
-      background: var(--emerald-50);
-      border: 1px solid #A7F3D0;
-      color: var(--emerald-600);
-      padding: 5px 10px;
-      border-radius: 20px;
-      font-size: 11px;
-      font-weight: 800;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
+    .summary-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px;
     }
 
-    /* ADMIN RULE CUSTOMIZATION BANNER */
-    .rule-customizer-panel {
-      background: #EEF2FF;
+    .summary-card {
+      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 14px 16px; box-shadow: var(--shadow);
+    }
+
+    .summary-card.alert { background: var(--rose-50); border-color: #FECDD3; }
+    .summary-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+    .summary-val { font-size: 26px; font-weight: 800; font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
+
+    .text-indigo { color: var(--brand-600); }
+    .text-emerald { color: var(--emerald-600); }
+    .text-rose { color: var(--rose-600); }
+
+    /* ADMIN PANEL SUITE STYLES */
+    .admin-panel-card {
+      background: #FFFFFF;
       border: 2px solid #6366F1;
       border-radius: var(--radius);
-      padding: 18px;
-      margin-bottom: 16px;
-      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.08);
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 14px rgba(79, 70, 229, 0.08);
     }
 
-    .panel-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .panel-title {
+    .admin-section-title {
       font-size: 15px;
       font-weight: 800;
       color: var(--brand-600);
+      margin-bottom: 12px;
       display: flex;
       align-items: center;
-      gap: 6px;
+      justify-content: space-between;
     }
 
     .global-rules-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 12px;
+      margin-bottom: 16px;
     }
 
     .rule-card-item {
-      background: #FFFFFF;
+      background: var(--bg-slate);
       border: 1px solid var(--border);
       border-radius: 8px;
       padding: 10px 14px;
@@ -178,24 +206,8 @@
       color: var(--brand-600);
       font-family: 'JetBrains Mono', monospace;
       outline: none;
+      background: #FFFFFF;
     }
-
-    .summary-grid {
-      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 16px;
-    }
-
-    .summary-card {
-      background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
-      padding: 14px 16px; box-shadow: var(--shadow);
-    }
-
-    .summary-card.alert { background: var(--rose-50); border-color: #FECDD3; }
-    .summary-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
-    .summary-val { font-size: 24px; font-weight: 800; font-family: 'JetBrains Mono', monospace; margin-top: 2px; }
-
-    .text-indigo { color: var(--brand-600); }
-    .text-emerald { color: var(--emerald-600); }
-    .text-rose { color: var(--rose-600); }
 
     .controls-bar {
       background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius);
@@ -269,34 +281,33 @@
     .modal-head { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
 
     .rule-form-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-      gap: 12px;
-      background: var(--bg-slate);
-      padding: 14px;
-      border-radius: 10px;
-      margin-bottom: 16px;
-      border: 1px solid var(--border);
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 12px;
+      background: var(--bg-slate); padding: 14px; border-radius: 10px; margin-bottom: 16px; border: 1px solid var(--border);
     }
 
     .form-field { display: flex; flex-direction: column; gap: 4px; }
     .form-label { font-size: 10px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
 
     .form-select, .form-num-input, .form-text-input {
-      background: #FFFFFF;
-      border: 1px solid var(--border);
-      padding: 8px 12px;
-      border-radius: 6px;
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--text-main);
-      outline: none;
+      background: #FFFFFF; border: 1px solid var(--border); padding: 8px 12px; border-radius: 6px;
+      font-size: 13px; font-weight: 600; color: var(--text-main); outline: none;
     }
 
     .ui-table { width: 100%; border-collapse: collapse; font-size: 12px; margin-top: 8px; }
     .ui-table th { background: var(--bg-slate); padding: 8px; text-align: left; font-weight: 700; color: var(--text-muted); }
     .ui-table td { padding: 6px 8px; border-bottom: 1px solid var(--border); }
     .table-input { width: 100%; padding: 6px; border: 1px solid var(--border); border-radius: 6px; font-size: 12px; }
+
+    /* Admin Login Box Styling */
+    .login-box {
+      max-width: 400px;
+      margin: 40px auto;
+      background: #FFFFFF;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      box-shadow: var(--shadow);
+    }
 
     @media (max-width: 768px) {
       .summary-grid { grid-template-columns: repeat(2, 1fr); gap: 8px; }
@@ -306,113 +317,143 @@
       .controls-bar { flex-direction: column; align-items: stretch; }
       .search-input { width: 100%; }
       .app-header { flex-direction: column; align-items: stretch; padding: 14px; }
-      .header-actions { width: 100%; justify-content: space-between; }
-      .header-actions button { flex: 1; justify-content: center; }
+      .portal-switcher { width: 100%; justify-content: center; }
     }
   </style>
 </head>
 <body>
 
   <div class="container">
+    <!-- FRONT PAGE HEADER WITH DUAL PORTAL SWITCHER -->
     <header class="app-header">
       <div>
         <div class="trust-tag">T.M.H.N.U. Educational Trust, Theni</div>
         <h1 class="header-title">Nadar Saraswathi Staffing Calculator</h1>
-        <p class="header-sub">Staff recruitment norms and campus calculator</p>
+        <p class="header-sub">Staff recruitment norms and campus dashboard</p>
       </div>
-      <div class="header-actions" id="headerActions"></div>
+
+      <!-- PORTAL TAB SWITCHER ON FRONT PAGE -->
+      <div class="portal-switcher">
+        <button class="portal-tab active" id="tabPublic" onclick="switchPortal('PUBLIC')">
+          👥 Public View
+        </button>
+        <button class="portal-tab" id="tabAdmin" onclick="switchPortal('ADMIN')">
+          👑 Admin Panel
+        </button>
+      </div>
     </header>
 
-    <!-- ADMIN RULE CUSTOMIZATION BANNER (Only visible when logged in as Admin) -->
-    <div class="rule-customizer-panel" id="adminRulePanel" style="display: none;">
-      <div class="panel-head">
-        <div class="panel-title">
-          👑 Admin Panel: Trust Staffing Rules & Ratios (Live Recalculation Engine)
-        </div>
-        <button class="btn btn-secondary btn-sm" onclick="resetGlobalRules()">Reset Default Rules</button>
-      </div>
-
-      <div class="global-rules-grid">
-        <div class="rule-card-item">
-          <span class="rule-item-label">🎓 Engineering Ratio (1 : X)</span>
-          <div class="rule-item-input-row">
-            <span style="font-size: 12px; font-weight: 700;">1 :</span>
-            <input type="number" class="rule-input-field" id="rule_engg_ratio" value="15" onchange="updateGlobalRule('enggRatio', this.value)"/>
-          </div>
-        </div>
-
-        <div class="rule-card-item">
-          <span class="rule-item-label">🎨 Arts & Science Ratio (1 : X)</span>
-          <div class="rule-item-input-row">
-            <span style="font-size: 12px; font-weight: 700;">1 :</span>
-            <input type="number" class="rule-input-field" id="rule_arts_ratio" value="20" onchange="updateGlobalRule('artsRatio', this.value)"/>
-          </div>
-        </div>
-
-        <div class="rule-card-item">
-          <span class="rule-item-label">🏫 Matric Teachers / Section</span>
-          <div class="rule-item-input-row">
-            <input type="number" step="0.1" class="rule-input-field" id="rule_matric_per_sec" value="1.5" onchange="updateGlobalRule('matricPerSec', this.value)"/>
-            <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">/ sec</span>
-          </div>
-        </div>
-
-        <div class="rule-card-item">
-          <span class="rule-item-label">📐 Max Students / Section</span>
-          <div class="rule-item-input-row">
-            <input type="number" class="rule-input-field" id="rule_max_sec" value="40" onchange="updateGlobalRule('maxPerSection', this.value)"/>
-            <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">students</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SUMMARY STATISTICS DECK -->
+    <!-- SUMMARY STATISTICS DECK (Visible on both portals) -->
     <div class="summary-grid" id="summaryDeck"></div>
 
-    <div class="controls-bar">
-      <div class="tab-group" id="catTabs">
-        <button class="tab-btn active" onclick="filterCat('ALL')">All Campuses (12)</button>
-        <button class="tab-btn" onclick="filterCat('Colleges & Higher Education')">Colleges</button>
-        <button class="tab-btn" onclick="filterCat('Matriculation Schools')">Matriculation</button>
-        <button class="tab-btn" onclick="filterCat('Aided Primary & Secondary Schools')">Aided Schools</button>
+    <!-- 1. PUBLIC VIEW PORTAL -->
+    <div id="portalPublicView">
+      <div class="controls-bar">
+        <div class="tab-group">
+          <button class="tab-btn active" onclick="filterCat('ALL')">All Campuses (12)</button>
+          <button class="tab-btn" onclick="filterCat('Colleges & Higher Education')">Colleges</button>
+          <button class="tab-btn" onclick="filterCat('Matriculation Schools')">Matriculation</button>
+          <button class="tab-btn" onclick="filterCat('Aided Primary & Secondary Schools')">Aided Schools</button>
+        </div>
+
+        <div style="display: flex; gap: 8px; align-items: center;">
+          <input type="text" placeholder="Search campus..." class="search-input" oninput="searchCampus(this.value)"/>
+          <button class="btn btn-secondary" onclick="exportCSV()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Export CSV
+          </button>
+        </div>
       </div>
 
-      <div>
-        <input type="text" placeholder="Search campus..." class="search-input" oninput="searchCampus(this.value)"/>
-      </div>
+      <div class="cards-grid" id="publicCardsGrid"></div>
     </div>
 
-    <div class="cards-grid" id="cardsGrid"></div>
-  </div>
+    <!-- 2. DEDICATED ADMIN PANEL PORTAL -->
+    <div id="portalAdminView" style="display: none;">
+      <!-- If not logged in as Admin, show Login Card -->
+      <div id="adminLoggedOutBox" class="login-box">
+        <h2 style="font-size: 18px; font-weight: 800; color: var(--brand-600); margin-bottom: 4px;">🔐 Admin Portal Login</h2>
+        <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">Sign in with admin credentials to access global rule settings and campus management:</p>
 
-  <!-- ADMIN LOGIN MODAL -->
-  <div class="modal-overlay" id="loginModal" style="display: none;">
-    <div class="modal-card" style="max-width: 400px;">
-      <div class="modal-head">
-        <h2 style="font-size: 16px; font-weight: 800;">🔐 Admin Panel Login</h2>
-        <button class="btn btn-secondary" style="padding: 3px 8px; font-size: 12px;" onclick="closeLoginModal()">✕</button>
-      </div>
-
-      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 14px;">Enter admin credentials to unlock rule customization & campus controls:</p>
-
-      <div style="display: flex; flex-direction: column; gap: 10px;">
-        <div class="form-field">
-          <label class="form-label">Username</label>
-          <input type="text" id="admin_user" placeholder="admin" class="form-text-input"/>
-        </div>
-        <div class="form-field">
-          <label class="form-label">Password</label>
-          <input type="password" id="admin_pass" placeholder="•••••" class="form-text-input"/>
-        </div>
-        <div id="loginError" style="color: var(--rose-600); font-size: 12px; font-weight: 700; display: none; margin-top: 4px;">
-          ❌ Incorrect username or password (use admin / admin)
+        <div style="display: flex; flex-direction: column; gap: 12px;">
+          <div class="form-field">
+            <label class="form-label">Username</label>
+            <input type="text" id="admin_user" placeholder="admin" class="form-text-input"/>
+          </div>
+          <div class="form-field">
+            <label class="form-label">Password</label>
+            <input type="password" id="admin_pass" placeholder="•••••" class="form-text-input"/>
+          </div>
+          <div id="loginError" style="color: var(--rose-600); font-size: 12px; font-weight: 700; display: none;">
+            ❌ Incorrect username or password (use admin / admin)
+          </div>
+          <button class="btn btn-primary" style="justify-content: center; padding: 10px; margin-top: 4px;" onclick="submitLogin()">
+            Login to Admin Panel
+          </button>
         </div>
       </div>
 
-      <div style="margin-top: 20px; display: flex; justify-content: flex-end; gap: 6px;">
-        <button class="btn btn-secondary" onclick="closeLoginModal()">Cancel</button>
-        <button class="btn btn-primary" onclick="submitLogin()">Login as Admin</button>
+      <!-- If Logged in as Admin, show Full Admin Suite -->
+      <div id="adminLoggedInSuite" style="display: none;">
+        <div class="admin-panel-card">
+          <div class="admin-section-title">
+            <span>⚙️ Global Trust Staffing Rules & Ratios (Instant Recalculation Engine)</span>
+            <div style="display: flex; gap: 8px;">
+              <button class="btn btn-primary btn-sm" onclick="openAddModal()">+ Add New Campus</button>
+              <button class="btn btn-secondary btn-sm" onclick="resetGlobalRules()">Reset Rules</button>
+              <button class="btn btn-danger btn-sm" onclick="logoutAdmin()">Logout</button>
+            </div>
+          </div>
+
+          <div class="global-rules-grid">
+            <div class="rule-card-item">
+              <span class="rule-item-label">🎓 Engineering Ratio (1 : X)</span>
+              <div class="rule-item-input-row">
+                <span style="font-size: 12px; font-weight: 700;">1 :</span>
+                <input type="number" class="rule-input-field" id="rule_engg_ratio" value="15" onchange="updateGlobalRule('enggRatio', this.value)"/>
+              </div>
+            </div>
+
+            <div class="rule-card-item">
+              <span class="rule-item-label">🎨 Arts & Science Ratio (1 : X)</span>
+              <div class="rule-item-input-row">
+                <span style="font-size: 12px; font-weight: 700;">1 :</span>
+                <input type="number" class="rule-input-field" id="rule_arts_ratio" value="20" onchange="updateGlobalRule('artsRatio', this.value)"/>
+              </div>
+            </div>
+
+            <div class="rule-card-item">
+              <span class="rule-item-label">🏫 Matric Teachers / Section</span>
+              <div class="rule-item-input-row">
+                <input type="number" step="0.1" class="rule-input-field" id="rule_matric_per_sec" value="1.5" onchange="updateGlobalRule('matricPerSec', this.value)"/>
+                <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">/ sec</span>
+              </div>
+            </div>
+
+            <div class="rule-card-item">
+              <span class="rule-item-label">📐 Max Students / Section</span>
+              <div class="rule-item-input-row">
+                <input type="number" class="rule-input-field" id="rule_max_sec" value="40" onchange="updateGlobalRule('maxPerSection', this.value)"/>
+                <span style="font-size: 11px; font-weight: 700; color: var(--text-muted);">students</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="controls-bar">
+          <div class="tab-group">
+            <button class="tab-btn active" onclick="filterCat('ALL')">All Campuses</button>
+            <button class="tab-btn" onclick="filterCat('Colleges & Higher Education')">Colleges</button>
+            <button class="tab-btn" onclick="filterCat('Matriculation Schools')">Matriculation</button>
+            <button class="tab-btn" onclick="filterCat('Aided Primary & Secondary Schools')">Aided Schools</button>
+          </div>
+
+          <div>
+            <input type="text" placeholder="Search campus..." class="search-input" oninput="searchCampus(this.value)"/>
+          </div>
+        </div>
+
+        <div class="cards-grid" id="adminCardsGrid"></div>
       </div>
     </div>
   </div>
@@ -491,6 +532,7 @@
       AIDED: "Aided Primary & Secondary Schools"
     };
 
+    let activePortal = "PUBLIC"; // "PUBLIC" or "ADMIN"
     let isAdmin = false;
 
     let globalRules = {
@@ -748,36 +790,24 @@
       return { students, required, current, needed, filledPct };
     }
 
-    function renderHeaderActions() {
-      const container = document.getElementById("headerActions");
-      if (isAdmin) {
-        container.innerHTML = `
-          <span class="admin-badge">👑 Admin Mode</span>
-          <button class="btn btn-primary" onclick="openAddModal()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-            + Add Campus
-          </button>
-          <button class="btn btn-danger" onclick="logoutAdmin()">Logout</button>
-          <button class="btn btn-secondary" onclick="exportCSV()">CSV</button>
-        `;
-        document.getElementById("adminRulePanel").style.display = "block";
+    /* PORTAL SWITCHING FUNCTION */
+    window.switchPortal = (portal) => {
+      activePortal = portal;
+      document.getElementById("tabPublic").className = `portal-tab ${portal === 'PUBLIC' ? 'active' : ''}`;
+      document.getElementById("tabAdmin").className = `portal-tab ${portal === 'ADMIN' ? 'active' : ''}`;
+
+      if (portal === 'PUBLIC') {
+        document.getElementById("portalPublicView").style.display = "block";
+        document.getElementById("portalAdminView").style.display = "none";
       } else {
-        container.innerHTML = `
-          <button class="btn btn-primary" onclick="openLoginModal()">
-            🔐 Admin Login
-          </button>
-          <button class="btn btn-secondary" onclick="exportCSV()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-            CSV Report
-          </button>
-        `;
-        document.getElementById("adminRulePanel").style.display = "none";
+        document.getElementById("portalPublicView").style.display = "none";
+        document.getElementById("portalAdminView").style.display = "block";
       }
-    }
+      render();
+    };
 
     function render() {
-      renderHeaderActions();
-
+      // 1. Render Summary Bar
       let totStudents = 0, totReq = 0, totCurr = 0, totNeeded = 0;
       state.institutions.forEach(inst => {
         const m = calcMetrics(inst);
@@ -806,6 +836,7 @@
         </div>
       `;
 
+      // 2. Filtered list
       const filtered = state.institutions.filter(inst => {
         const matchCat = state.selectedCat === "ALL" || inst.category === state.selectedCat;
         const q = state.searchQuery.toLowerCase().trim();
@@ -813,7 +844,8 @@
         return matchCat && matchSearch;
       });
 
-      document.getElementById("cardsGrid").innerHTML = filtered.map(inst => {
+      // 3. Render Public View Cards
+      document.getElementById("publicCardsGrid").innerHTML = filtered.map(inst => {
         const m = calcMetrics(inst);
         const needsHiring = m.needed > 0;
         return `
@@ -829,10 +861,9 @@
                 </div>
               </div>
 
-              <!-- Progress Bar -->
               <div class="progress-box">
                 <div class="progress-text">
-                  <span>Staffing Progress</span>
+                  <span>Staffing Compliance</span>
                   <span class="${needsHiring ? 'text-rose' : 'text-emerald'}">${m.current} / ${m.required} (${m.filledPct}%)</span>
                 </div>
                 <div class="progress-bar">
@@ -840,7 +871,6 @@
                 </div>
               </div>
 
-              <!-- 3 Metrics Row -->
               <div class="metrics-row">
                 <div>
                   <div class="metric-head">Students</div>
@@ -852,67 +882,107 @@
                 </div>
                 <div>
                   <div class="metric-head">Current Staff</div>
-                  ${isAdmin ? `
-                    <div class="stepper">
-                      <button class="step-btn" onclick="updateFaculty('${inst.id}', -1)">-</button>
-                      <span class="step-val">${m.current}</span>
-                      <button class="step-btn" onclick="updateFaculty('${inst.id}', 1)">+</button>
-                    </div>
-                  ` : `
-                    <div class="metric-num">${m.current}</div>
-                  `}
+                  <div class="metric-num">${m.current}</div>
                 </div>
               </div>
             </div>
 
             <div class="card-footer">
-              <span style="color: var(--text-muted);">Rule: ${inst.ruleType === 'per_section' ? (inst.teachersPerSection || globalRules.matricPerSec) + '/sec' : '1:' + (inst.id === 'nscet' ? globalRules.enggRatio : (inst.id === 'nscas' ? globalRules.artsRatio : inst.targetRatio))}</span>
-              ${isAdmin ? `
-                <button class="btn btn-secondary btn-sm" onclick="openEditModal('${inst.id}')">⚙️ Customize Rules</button>
-              ` : `
-                <button class="btn btn-secondary btn-sm" onclick="promptAdminLogin()">🔒 Admin Edit</button>
-              `}
+              <span style="color: var(--text-muted);">Rule Norm: ${inst.ruleType === 'per_section' ? (inst.teachersPerSection || globalRules.matricPerSec) + '/sec' : '1:' + (inst.id === 'nscet' ? globalRules.enggRatio : (inst.id === 'nscas' ? globalRules.artsRatio : inst.targetRatio))}</span>
+              <span style="color: var(--brand-600); font-weight: 700;">Verified</span>
             </div>
           </div>
         `;
       }).join('');
+
+      // 4. Render Admin Portal View
+      if (isAdmin) {
+        document.getElementById("adminLoggedOutBox").style.display = "none";
+        document.getElementById("adminLoggedInSuite").style.display = "block";
+
+        document.getElementById("adminCardsGrid").innerHTML = filtered.map(inst => {
+          const m = calcMetrics(inst);
+          const needsHiring = m.needed > 0;
+          return `
+            <div class="inst-card ${needsHiring ? 'needs-staff' : 'staffed'}">
+              <div>
+                <div class="card-head">
+                  <div>
+                    <div class="inst-name">${inst.name}</div>
+                    <div class="inst-type">${inst.type}</div>
+                  </div>
+                  <div>
+                    ${needsHiring ? `<span class="status-badge badge-rose">+${m.needed} Needed</span>` : `<span class="status-badge badge-emerald">Fully Staffed</span>`}
+                  </div>
+                </div>
+
+                <div class="progress-box">
+                  <div class="progress-text">
+                    <span>Staffing Progress</span>
+                    <span class="${needsHiring ? 'text-rose' : 'text-emerald'}">${m.current} / ${m.required} (${m.filledPct}%)</span>
+                  </div>
+                  <div class="progress-bar">
+                    <div class="progress-fill" style="width: ${m.filledPct}%; background: ${needsHiring ? 'var(--rose-600)' : 'var(--emerald-600)'}"></div>
+                  </div>
+                </div>
+
+                <div class="metrics-row">
+                  <div>
+                    <div class="metric-head">Students</div>
+                    <div class="metric-num">${m.students.toLocaleString()}</div>
+                  </div>
+                  <div>
+                    <div class="metric-head">Required</div>
+                    <div class="metric-num text-indigo">${m.required}</div>
+                  </div>
+                  <div>
+                    <div class="metric-head">Current Staff</div>
+                    <div class="stepper">
+                      <button class="step-btn" onclick="updateFaculty('${inst.id}', -1)">-</button>
+                      <span class="step-val">${m.current}</span>
+                      <button class="step-btn" onclick="updateFaculty('${inst.id}', 1)">+</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="card-footer">
+                <span style="color: var(--text-muted);">Rule: ${inst.ruleType === 'per_section' ? (inst.teachersPerSection || globalRules.matricPerSec) + '/sec' : '1:' + (inst.id === 'nscet' ? globalRules.enggRatio : (inst.id === 'nscas' ? globalRules.artsRatio : inst.targetRatio))}</span>
+                <button class="btn btn-secondary btn-sm" onclick="openEditModal('${inst.id}')">⚙️ Edit Campus Rules</button>
+              </div>
+            </div>
+          `;
+        }).join('');
+      } else {
+        document.getElementById("adminLoggedOutBox").style.display = "block";
+        document.getElementById("adminLoggedInSuite").style.display = "none";
+      }
     }
 
-    /* AUTHENTICATION CONTROL */
-    window.openLoginModal = () => {
-      document.getElementById("loginError").style.display = "none";
-      document.getElementById("loginModal").style.display = "flex";
-    };
-    window.closeLoginModal = () => {
-      document.getElementById("loginModal").style.display = "none";
-    };
+    /* AUTHENTICATION CONTROLS */
     window.submitLogin = () => {
       const u = document.getElementById("admin_user").value.trim();
       const p = document.getElementById("admin_pass").value.trim();
       if (u === "admin" && p === "admin") {
         isAdmin = true;
-        closeLoginModal();
+        document.getElementById("loginError").style.display = "none";
         render();
       } else {
         document.getElementById("loginError").style.display = "block";
       }
     };
+
     window.logoutAdmin = () => {
       isAdmin = false;
       render();
     };
-    window.promptAdminLogin = () => {
-      openLoginModal();
-    };
 
     window.updateGlobalRule = (field, val) => {
-      if (!isAdmin) { promptAdminLogin(); return; }
       globalRules[field] = parseFloat(val) || 1;
       render();
     };
 
     window.resetGlobalRules = () => {
-      if (!isAdmin) { promptAdminLogin(); return; }
       globalRules = { enggRatio: 15, artsRatio: 20, matricPerSec: 1.5, maxPerSection: 40 };
       document.getElementById("rule_engg_ratio").value = 15;
       document.getElementById("rule_arts_ratio").value = 20;
@@ -922,7 +992,6 @@
     };
 
     window.updateFaculty = (id, delta) => {
-      if (!isAdmin) { promptAdminLogin(); return; }
       state.institutions = state.institutions.map(i => i.id === id ? { ...i, currentFaculty: Math.max(0, i.currentFaculty + delta) } : i);
       render();
     };
@@ -939,14 +1008,12 @@
 
     /* ADD NEW CAMPUS MODAL CONTROLS */
     window.openAddModal = () => {
-      if (!isAdmin) { promptAdminLogin(); return; }
       document.getElementById("addCampusModal").style.display = "flex";
     };
     window.closeAddModal = () => {
       document.getElementById("addCampusModal").style.display = "none";
     };
     window.saveNewCampus = () => {
-      if (!isAdmin) { promptAdminLogin(); return; }
       const name = document.getElementById("new_name").value.trim() || "New Nadar Saraswathi Campus";
       const cat = document.getElementById("new_cat").value;
       const type = document.getElementById("new_type").value.trim() || "Higher Secondary / College";
@@ -978,7 +1045,6 @@
 
     /* EDIT CAMPUS RULES MODAL CONTROLS */
     window.openEditModal = (id) => {
-      if (!isAdmin) { promptAdminLogin(); return; }
       const original = state.institutions.find(i => i.id === id);
       state.editingInst = JSON.parse(JSON.stringify(original));
       renderModalContent();
